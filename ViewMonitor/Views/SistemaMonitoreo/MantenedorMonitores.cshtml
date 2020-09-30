@@ -1,0 +1,68 @@
+﻿@model MantenedorMonitoreInput
+
+@{
+    ViewData["Title"] = "MantenedorMonitores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<partial name="Shared/_MantenedorMonitoresEdit" model="@Model" />
+
+
+<section class="page-content container-fluid">
+    <div class="row">
+
+        <div class="card ">
+            <h1 class="card-header ">Monitores</h1>
+            <div class="card-body">
+                <div id="MonitoresMant">
+                    <partial name="Shared/_MantenedorMonitoresMonitores" model="@Model" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</section>
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(".BtnMonitoresEdit").click(function () {
+
+            let nm = $(this).closest('tr').find('.nameMonitor').first();
+            let ds = $(this).closest('tr').find('.descMonitor').first();
+            let pr = $(this).closest('tr').find('.procMonitor').first();
+
+            $("#MonitorInput_Nombre").val(nm.text());
+            $("#MonitorInput_Descripcion").val(ds.text());
+            $("#MonitorInput_Procedimiento").val(pr.text());
+            $("#MonitorInput_Job_MonitorID").val($(this).data("job"));
+            $("#MonitorInput_AgrupacionID").val($(this).data("agr"));
+
+
+
+
+
+            $("#MonitorEdit").modal({
+                keyboard: true,
+                backdrop: "static"
+            });
+
+
+        });
+
+        $("#AjaxFormMonitores").submit(function () {
+
+        });
+
+
+
+    </script>
+
+
+}
+
+

@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ViewMonitor</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+
+
+
+    <!-- ======================= GLOBAL VENDOR STYLES ========================-->
+    <link rel="stylesheet" href="~/lib/assets/vendor/metismenu/dist/metisMenu.min.css">
+    <link rel="stylesheet" href="~/lib/assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css">
+    <!-- ======================= LINE AWESOME ICONS ===========================-->
+    <link rel="stylesheet" href="~/lib/assets/css/icons/line-awesome/css/line-awesome.min.css">
+    <!-- ======================= DRIP ICONS ===================================-->
+    <link rel="stylesheet" href="~/lib/assets/css/icons/dripicons.min.css">
+    <!-- ======================= MATERIAL DESIGN ICONIC FONTS =================-->
+    @*<link rel="stylesheet" href="~/lib/assets/css/icons/material-design-iconic-font.min.css">*@
+    @*<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">*@
+
+    <link rel="stylesheet" href="~/lib/assets/css/icons/font-awesome/css/all.min.css" />
+    <!-- ======================= PAGE LEVEL VENDOR STYLES ============================-->
+    <link rel="stylesheet" href="~/lib/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <!-- ======================= GLOBAL COMMON STYLES ============================-->
+    <link rel="stylesheet" href="~/lib/assets/css/common/main.bundle.css">
+    <!-- ======================= LAYOUT TYPE ===========================-->
+    <link rel="stylesheet" href="~/lib/assets/css/layouts/vertical/core/main.css">
+    <!-- ======================= MENU TYPE ===========================================-->
+    <link rel="stylesheet" href="~/lib/assets/css/layouts/vertical/menu-type/default.css">
+    <!-- ======================= THEME COLOR STYLES ===========================-->
+    <link rel="stylesheet" href="~/lib/assets/css/layouts/vertical/themes/theme-a.css">
+    <!-- ======================= ANIMATE ===========================-->
+    <link rel="stylesheet" href="~/lib/animate.css/animate.min.css" />
+    <!-- ======================= Picker ===========================-->
+    <link rel="stylesheet" href="~/lib/assets/vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="~/lib/assets/vendor/fullcalendar/main.css" />
+
+
+    <link rel="stylesheet" href="~/lib/gijgo/combined/css/gijgo.min.css" />
+    <link rel="stylesheet" href="~/lib/assets/vendor/sweetalert2/dist/sweetalert2.min.css" /> 
+
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ViewMonitor</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SistemaMonitoreo" asp-action="MonitoreoVisual">SDDSA</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SistemaMonitoreo" asp-action="MantenedorMonitores">SDDSAasdasdasdasd</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="content">
+
+        <!--END PAGE HEADER -->
+        <!--START PAGE CONTENT -->
+
+        <main role="main">
+            @RenderBody()
+        </main>
+
+
+
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - ViewMonitor - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ================== GLOBAL VENDOR SCRIPTS ==================-->
+    <script src="~/lib/assets/vendor/modernizr/modernizr.custom.js"></script>
+
+
+    <script src="~/lib/assets/vendor/js-storage/js.storage.min.js"></script>
+    <script src="~/lib/assets/vendor/js-cookie/js.cookie.min.js"></script>
+    <script src="~/lib/assets/vendor/pace/pace.min.js"></script>
+    <script src="~/lib/assets/vendor/metismenu/dist/metisMenu.min.js"></script>
+    <script src="~/lib/assets/vendor/switchery-npm/index.js"></script>
+
+    <script src="~/lib/assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- ================== PAGE LEVEL VENDOR SCRIPTS ==================-->
+    <script src="~/lib/assets/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="~/lib/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <!-- ================== GLOBAL APP SCRIPTS ==================-->
+    <script src="~/lib/assets/js/global/app.js"></script>
+    <!-- ================== PAGE LEVEL VENDOR SCRIPTS ==================-->
+    <!-- ================== PAGE LEVEL COMPONENT SCRIPTS ==================-->
+    <script src="~/lib/assets/js/components/datatables-init.js"></script>
+    <script src="~/lib/assets/js/cards/recent-transactions.js"></script>
+    <script src="~/lib/assets/js/components/custom-scrollbar.js"></script>
+    <!-- ================== SCRIPTS NOTIFY ==================-->
+    <script src="~/lib/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="~/lib/gijgo/combined/js/gijgo.min.js"></script>
+    <!-- ======================= Picker ===========================-->
+    <script src="~/lib/assets/vendor/moment.js/moment.min.js"></script>
+    <script src="~/lib/assets/vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="~/lib/assets/js/components/tempusdominus-bootstrap-4-init.js"></script>
+    <script src="~/lib/assets/vendor/fullcalendar/main.js"></script>
+    <script src="~/lib/assets/vendor/fullcalendar/locales/es.js"></script>
+    <script src="~/lib/assets/vendor/moment.js/locale/es.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

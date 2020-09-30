@@ -1,0 +1,99 @@
+﻿@model MantenedorMonitoreInput
+
+<form id="AjaxFormMonitores" method="post">
+    <div class="modal fade" id="MonitorEdit" tabindex="-1" role="dialog" aria-labelledby="MonitorEdit" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Actualizar datos Medico</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row m-b-30 m-t-20">
+                        <div class="col-5">
+                            <div class="row">
+                                <label asp-for="MonitorInput.Activo" class="col-5"></label>
+                                <div class="col-6">
+                                    <input class="tgl tgl-light tgl-success" asp-for="MonitorInput.Activo" type="checkbox">
+                                    <label class="tgl-btn" for="MonitorInput_Activo"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="row">
+                                <label asp-for="MonitorInput.Alerta" class="col-5"></label>
+                                <div class="col-6">
+                                    <input class="tgl tgl-light tgl-success" asp-for="MonitorInput.Alerta" type="checkbox">
+                                    <label class="tgl-btn" for="MonitorInput_Alerta"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="MonitorInput.Nombre" class="col-md-3 col-form-label"></label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" asp-for="MonitorInput.Nombre">
+                            <span asp-validation-for="MonitorInput.Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="MonitorInput.Descripcion" class="col-md-3 col-form-label"></label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" asp-for="MonitorInput.Descripcion">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="MonitorInput.Procedimiento" class="col-md-3 col-form-label"></label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" asp-for="MonitorInput.Procedimiento">
+                            <span asp-validation-for="MonitorInput.Procedimiento" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="MonitorInput.Job_MonitorID" class="col-md-3 col-form-label"></label>
+                        <div class="col-md-9">
+                            <select asp-for="MonitorInput.Job_MonitorID" class="form-control">
+                                <option value="" disabled selected>Seleccionar Dia de la Semana</option>
+
+                                @foreach (SelectListItem val in Model.Job_Monitors)
+                                {
+                                    <option value="@val.Value">@val.Text</option>
+                                }
+                            </select>
+                            <span asp-validation-for="MonitorInput.Job_MonitorID" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="MonitorInput.AgrupacionID" class="col-md-3 col-form-label"></label>
+                        <div class="col-md-9">
+                            <select asp-for="MonitorInput.AgrupacionID" class="form-control">
+                                @foreach (SelectListItem val in Model.Agrupacions)
+                                {
+                                    <option value="@val.Value">@val.Text</option>
+                                }
+                            </select>
+                            <span asp-validation-for="MonitorInput.AgrupacionID" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-9">
+                        <div id="ErrorAlert" class="alert alert-danger" style="display:none" role="alert">
+                            Error en los datos enviados!
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancel">Cancelar</button>
+                    <button type="submit" class="btn btn-success" id="SubmitBtn">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

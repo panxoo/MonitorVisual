@@ -1,0 +1,71 @@
+﻿@model MantenedorMonitoreInput
+
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Activo
+            </th>
+            <th>
+                Monitor
+            </th>
+            <th>
+                Descripción
+            </th>
+            <th>
+                Procedimiento
+            </th>
+            <th>
+                Jobs
+            </th>
+            <th>
+                Grupo
+            </th>
+            <th>
+                Notifica
+            </th>
+            <th>
+                Opciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (MantenedorMonitoreInput.MonitoresDatos item in Model.MonitoresDt)
+        {
+        <tr>
+            <td>
+                @if (item.Activo)
+                {
+                    <label class="badge badge-pill badge-success">Activo</label>
+                }
+                else
+                {
+                    <label class="badge badge-pill badge-danger">Inactivo</label>
+                }
+
+            </td>
+            <td class="nameMonitor">@Html.DisplayFor(modelItem => item.Nombre)</td>
+            <td class="descMonitor">@Html.DisplayFor(modelItem => item.Descripcion)</td>
+            <td class="procMonitor">@Html.DisplayFor(modelItem => item.Procedimiento)</td>
+            <td>@Html.DisplayFor(modelItem => item.JobName)</td>
+            <td>@Html.DisplayFor(modelItem => item.AgrupacionName)</td>
+            <td>
+                        @if (item.Alerta)
+                        {
+                            <label class="badge badge-pill badge-success">Activo</label>
+                        }
+                        else
+                        {
+                            <label class="badge badge-pill badge-danger">Inactivo</label>
+                        }
+                    </td>
+            <td>
+                <a href="#" class="BtnMonitoresEdit" title="Editar Medico" data-id="@item.MonitorID" data-acti="@item.Activo" data-agr="@item.AgrupacionID" data-job="@item.Job_MonitorID" data-ale="@item.Alerta">
+                    <i class="far fa-pencil-alt fa-2x"></i>
+                </a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ViewMonitor.Data;
+using ViewMonitor.Models;
 using ViewMonitor.Models.SistemaMonitoreo;
 
 namespace ViewMonitor.Metodos.SistemaMonitoreo
@@ -22,7 +22,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
         {
             MonitorVisualInput _model = new MonitorVisualInput();
 
-            _model.MonitoresVisual = await _context.Monitors.Select(s => new MonitorVisualInput.MonitoresEstado
+            _model.MonitoresVisual = await _context.Monitors.Where(w => w.Activo).Select(s => new MonitorVisualInput.MonitoresEstado
             {
                 MonitorID = s.MonitorID,
                 MonitorNom = s.Nombre,
@@ -51,8 +51,8 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                 Alerta = s.Alerta,
                 JobName = s.Job_Monitor.Nombre,
                 Job_MonitorID = s.Job_MonitorID,
-               Procedimiento = s.Procedimiento,
-               Descripcion = s.Descripcion
+                Procedimiento = s.Procedimiento,
+                Descripcion = s.Descripcion
             }).ToListAsync();
 
             _model.Agrupacions = await _context.Agrupacions.Select(s => new SelectListItem { Value = s.AgrupacionID.ToString(), Text = s.Nombre }).ToListAsync();
@@ -60,6 +60,28 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
             return _model;
         }
+
+
+        public async Task<MantenedorParametrosInput> GetMantenedorParametros()
+        {
+            MantenedorParametrosInput _model = new MantenedorParametrosInput();
+
+            _model.AgrupacionDt = await GetMantenedorAgrupacion();
+            _model.Job_MonitorDt = await GetMantenedorJobs();
+
+            return _model;
+        }
+
+        public async Task<List<Agrupacion>> GetMantenedorAgrupacion()
+        {
+            return await _context.Agrupacions.ToListAsync();
+        }
+
+        public async Task<List<Job_Monitor>> GetMantenedorJobs()
+        {
+            return await _context.Job_Monitors.ToListAsync();
+        }
+
 
 
     }

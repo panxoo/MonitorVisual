@@ -8,8 +8,8 @@ namespace ViewMonitor.Models
         public int MonitorID { get; set; }
 
         [StringLength(500)]
-        [Display(Name ="Nombre Monitor")]
-        [Required(ErrorMessage ="Se debe ingresar Nombre del Monitor")]
+        [Display(Name = "Nombre Monitor")]
+        [Required(ErrorMessage = "Se debe ingresar Nombre del Monitor")]
         public string Nombre { get; set; }
         [StringLength(1000)]
         [Required(ErrorMessage = "Se debe ingresar el procedimiento del monitor")]
@@ -28,7 +28,7 @@ namespace ViewMonitor.Models
         public int Job_MonitorID { get; set; }
         public Job_Monitor Job_Monitor { get; set; }
 
-        [Display(Name ="Agrupación")]
+        [Display(Name = "Agrupación")]
         public int AgrupacionID { get; set; }
         public Agrupacion Agrupacion { get; set; }
 

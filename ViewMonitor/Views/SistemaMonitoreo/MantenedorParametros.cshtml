@@ -1,0 +1,169 @@
+﻿@model MantenedorParametrosInput
+
+@{
+    ViewData["Title"] = "MantenedorParametros";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<partial name="Shared/_MantenedorParametro_JobEdit" model="@Model" />
+<partial name="Shared/_MantenedorParametro_AgrupacionEdit" model="@Model" />
+
+
+
+<section class="page-content container-fluid">
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex bd-highlight">
+                        <h1 class=" p-2 flex-grow-1 bd-highlight">Grupo</h1>
+                        <div class="p-2  bd-highlight">
+                            <a href="#" id="BtnGrupoAdd" title="Agregar Grupo">
+                                <i class="fas fa-plus-circle fa-2x text-info "></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="GrupoMant">
+                        <div class="table-responsive">
+                            <partial name="Shared/_MantenedorParametro_Agrupacion" model="@Model.AgrupacionDt" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex bd-highlight">
+                        <h1 class=" p-2 flex-grow-1 bd-highlight">Jobs</h1>
+                        <div class="p-2  bd-highlight">
+                            <a href="#" id="BtnJobAdd" title="Agregar Job">
+                                <i class="fas fa-plus-circle fa-2x text-info "></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="JobMant">
+                        <div class="table-responsive">
+                            <partial name="Shared/_MantenedorParametro_Job" model="@Model.Job_MonitorDt" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+
+    <script type="text/javascript">
+
+        function levantarAgrup(e) {
+            let nom = $(e).closest('tr').find('.nameAgrup').first();
+
+            $("#AgrupacionInput").val(nom.text());
+
+            sessionStorage.setItem("AgrupacionDt", JSON.stringify(["4d6f64", $(e).data("id")]));
+
+            $("#AgrupaEdit").modal({ keyboard: true, backdrop: "static" });
+        };
+
+        $("#BtnGrupoAdd").click(function () {
+
+            $("#AgrupacionInput").val('');
+            sessionStorage.setItem("AgrupacionDt", JSON.stringify(["416772", "1"]));
+
+            $("#AgrupaEdit").modal({ keyboard: true, backdrop: "static" });
+        });
+
+        $("#AjaxFormAgrupacion").submit(function (e) {
+            e.preventDefault();
+
+            if (!$("#AjaxFormAgrupacion").valid()) {
+                return;
+            }
+
+            let post = new AjaxSubmit('@Url.Action("MantenedorAgrupacionEdit", "SistemaMonitoreo")', "#SubmitBtnAgr", "Error almacenamiento");
+            post.btnCancel = "#btnCancelAgr";
+            post.partial = "#GrupoMant";
+
+            dt = ObtenerDatosAgrp();
+            post.AjaxPop(dt);
+
+        });
+
+        function ObtenerDatosAgrp() {
+            let sesion = JSON.parse(sessionStorage.getItem('AgrupacionDt'));
+
+            return {
+                AgrupacionID: sesion[1],
+                Nombre: $("#AgrupacionInput").val(),
+                Accion: sesion[0]
+            }
+        }
+
+    function levantarJob(e) {
+        let nom = $(e).closest('tr').find('.nameJob').first();
+
+        $("#Job_MonitorInput").val(nom.text());
+
+        sessionStorage.setItem("JobDt", JSON.stringify(["4d6f64", $(e).data("id")]));
+
+        $("#Job_MonitorEdit").modal({ keyboard: true, backdrop: "static" });
+    };
+
+    $("#BtnJobAdd").click(function () {
+
+        $("#Job_MonitorInput").val('');
+
+        sessionStorage.setItem("JobDt", JSON.stringify(["416772", "1"]));
+
+        $("#Job_MonitorEdit").modal({ keyboard: true, backdrop: "static" });
+    });
+
+    $("#AjaxFormJob").submit(function (e) {
+            e.preventDefault();
+
+            if (!$("#AjaxFormJob").valid()) {
+                return;
+            }
+
+        let post = new AjaxSubmit('@Url.Action("MantenedorJobEdit", "SistemaMonitoreo")', "#SubmitBtnJob", "Error almacenamiento");
+        post.btnCancel = "#btnCancelJob";
+        post.partial = "#JobMant";
+
+        dt = ObtenerDatosJob();
+            post.AjaxPop(dt);
+
+    });
+
+
+    function ObtenerDatosJob() {
+        let sesion = JSON.parse(sessionStorage.getItem('JobDt'));
+
+        return {
+            Job_MonitorID: sesion[1],
+            Nombre: $("#Job_MonitorInput").val(),
+            Accion: sesion[0]
+        }
+    }
+
+
+    </script>
+
+
+}
+
+

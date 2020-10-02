@@ -1,5 +1,3 @@
-using System;
-
 namespace ViewMonitor.Models
 {
     public class ErrorViewModel

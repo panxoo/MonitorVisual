@@ -63,10 +63,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SistemaMonitoreo" asp-action="MonitoreoVisual">SDDSA</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SistemaMonitoreo" asp-action="MonitoreoVisual">Monitor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SistemaMonitoreo" asp-action="MantenedorMonitores">SDDSAasdasdasdasd</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SistemaMonitoreo" asp-action="MantenedorMonitores">Administrador Monitor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SistemaMonitoreo" asp-action="MantenedorParametros">Administrador Parametros</a>
                         </li>
                     </ul>
                 </div>
@@ -125,6 +128,7 @@
     <script src="~/lib/assets/vendor/fullcalendar/main.js"></script>
     <script src="~/lib/assets/vendor/fullcalendar/locales/es.js"></script>
     <script src="~/lib/assets/vendor/moment.js/locale/es.min.js"></script>
+    <script src="~/js/site.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

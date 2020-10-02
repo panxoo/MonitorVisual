@@ -1,4 +1,82 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
 
-// Write your JavaScript code.
+function CheckedCheckbox(objet, decicion) {
+    if (decicion) {
+        $(objet).attr("checked", "checked");
+        $(objet).prop("checked", true);
+    }
+    else {
+        $(objet).prop("checked", false);
+    }
+}
+
+
+function AjaxSubmit(_url, _btnSubmit, _titleError) {
+    this.url = _url;
+    this.btnSubmit = _btnSubmit;
+    this.btnCancel;
+    this.partial;
+    this.titleError = _titleError;
+    this.divBlock;
+    this.inputClear;
+}
+
+AjaxSubmit.prototype.AjaxPop = function (_dt) {
+    _btnCancel = this.btnCancel;
+    _partial = this.partial;
+    _titleError = this.titleError;
+    _btnSubmit = this.btnSubmit;
+    _inputClear = this.inputClear;
+
+    $(this.btnSubmit).prop("disabled", true);
+
+    $.ajax({
+        url: this.url,
+        data: _dt,
+        type: "post",
+        cache: false,
+        success: function (result) {
+            if (result != null) {
+                $(_btnCancel).click();
+                $(_partial).html(result);
+                NotificaSave();
+                if (_inputClear != null) {
+                    _inputClear.forEach(function (input) {
+                        $(input).val("");
+                    });
+                };
+            };
+        },
+        error: function (result) {
+            MensajeError(_titleError, result.responseJSON.mnsj);
+            if (result.responseJSON.redir) {
+                setTimeout(function () { window.location.replace(result.responseJSON.redirectToUrl); }, 3000);
+            }
+        },
+        complete: function () {
+            $(_btnSubmit).prop("disabled", false);
+        }
+    });
+}
+
+
+function NotificaSave() {
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: "Registro almacenado con exito.",
+        showConfirmButton: false,
+        timer: 1500
+    })
+}
+
+function MensajeError(tit, tex) {
+    swal.fire({
+        icon: 'error',
+        title: tit,
+        text: tex,
+        timer: 50000,
+        confirmButtonText: 'Aceptar',
+        timerProgressBar: true
+    });
+}

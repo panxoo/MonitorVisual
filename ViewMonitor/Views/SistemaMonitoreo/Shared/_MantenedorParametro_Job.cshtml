@@ -1,0 +1,27 @@
+﻿@model List<Job_Monitor>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Jobs Nombre
+            </th>
+            <th>
+                Opciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Job_Monitor item in Model)
+        {
+            <tr>
+                <td class="nameJob">@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td>
+                    <a class="BtnMonitoresEdit" onclick="levantarJob(this)" title="Editar Medico" data-id="@item.Job_MonitorID">
+                        <i class="far fa-edit fa-2x"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,27 @@
+﻿@model List<Agrupacion>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>            
+            <th>
+                Grupo Nombre
+            </th>            
+            <th>
+                Opciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Agrupacion item in Model)
+        {
+            <tr>
+                <td class="nameAgrup">@Html.DisplayFor(modelItem => item.Nombre)</td>                
+                <td>
+                    <a class="BtnMonitoresEdit" onclick="levantarAgrup(this)" title="Editar Medico" data-id="@item.AgrupacionID">
+                        <i class="far fa-edit fa-2x"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

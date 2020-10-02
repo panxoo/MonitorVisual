@@ -1,0 +1,36 @@
+﻿@model MantenedorParametrosInput
+
+<form id="AjaxFormJob" method="post">
+    <div class="modal fade" id="Job_MonitorEdit" tabindex="-1" role="dialog" aria-labelledby="MonitorEdit" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Actualizar datos Medico</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group row">
+                        <label asp-for="Job_MonitorInput" class="col-md-3 col-form-label"></label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" asp-for="Job_MonitorInput">
+                            <span asp-validation-for="Job_MonitorInput" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-9">
+                        <div id="ErrorAlert" class="alert alert-danger" style="display:none" role="alert">
+                            Error en los datos enviados!
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelJob">Cancelar</button>
+                    <button type="submit" class="btn btn-success" id="SubmitBtnJob">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

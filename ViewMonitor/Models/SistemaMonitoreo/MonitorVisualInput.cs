@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ViewMonitor.Models.SistemaMonitoreo
 {
@@ -16,7 +13,7 @@ namespace ViewMonitor.Models.SistemaMonitoreo
             public int MonitorID { get; set; }
             public string MonitorNom { get; set; }
             public string JobNom { get; set; }
-            public bool MonitorEstado { get; set; } 
+            public bool MonitorEstado { get; set; }
             public int Agrupacion { get; set; }
             public bool Alarma { get; set; }
         }

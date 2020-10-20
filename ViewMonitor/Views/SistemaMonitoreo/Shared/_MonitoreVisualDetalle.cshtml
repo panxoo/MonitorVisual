@@ -1,0 +1,47 @@
+@model MonitorVisualInput.MonitorEstadoDetalle
+
+
+                @Html.Hidden("idMonitor", "")
+                <dl class="row">
+                    <dt class="col-sm-3">
+                        Monitor :
+                    </dt>
+                    <dd class="col-sm-9 m-b-20">
+                        @Model.MonitorNom
+                    </dd>
+
+                    <dt class="col-md-3">
+                        Detalle :
+                    </dt>
+                    <dd class="col-md-9 m-b-20">
+                        @Model.MonitorDescripcion
+                    </dd>
+
+                    <dt class="col-md-3">
+                        Procedimiento :
+                    </dt>
+                    <dd class="col-md-9 m-b-20">
+                        @Model.Procedimiento
+                    </dd>
+
+                    <dt class="col-md-3">
+                        Estado :
+                    </dt>
+                    <dd class="col-md-9 m-b-20">
+                        @if (@Model.MonitorEstado)
+                        {
+                            <label class="badge badge-pill badge-success">Correcto</label>
+                        }
+                        else
+                        {
+                            <label class="badge badge-pill badge-danger">Error</label>
+                        }
+                    </dd>
+
+                    <dt class="col-md-3">
+                        Hora Ultimo Estado :
+                    </dt>
+                    <dd class="col-md-9 m-b-20">
+                        @Model.FechaHistEst
+                    </dd>
+                </dl>

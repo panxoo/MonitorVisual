@@ -1,11 +1,8 @@
-﻿
-
-function CheckedCheckbox(objet, decicion) {
+﻿function CheckedCheckbox(objet, decicion) {
     if (decicion) {
         $(objet).attr("checked", "checked");
         $(objet).prop("checked", true);
-    }
-    else {
+    } else {
         $(objet).prop("checked", false);
     }
 }
@@ -50,7 +47,9 @@ AjaxSubmit.prototype.AjaxPop = function (_dt) {
         error: function (result) {
             MensajeError(_titleError, result.responseJSON.mnsj);
             if (result.responseJSON.redir) {
-                setTimeout(function () { window.location.replace(result.responseJSON.redirectToUrl); }, 3000);
+                setTimeout(function () {
+                    window.location.replace(result.responseJSON.redirectToUrl);
+                }, 3000);
             }
         },
         complete: function () {
@@ -59,6 +58,30 @@ AjaxSubmit.prototype.AjaxPop = function (_dt) {
     });
 }
 
+AjaxSubmit.prototype.AjaxPopOpen = function (_dt) {
+    _partial = this.partial;
+    _titleError = this.titleError;
+
+    $.ajax({
+        url: this.url,
+        data: _dt,
+        type: "post",
+        cache: false,
+        success: function (result) {
+            if (result != null) {
+                $(_partial).html(result);                
+            };
+        },
+        error: function (result) {
+            MensajeError(_titleError, result.responseJSON.mnsj);
+            if (result.responseJSON.redir) {
+                setTimeout(function () {
+                    window.location.replace(result.responseJSON.redirectToUrl);
+                }, 3000);
+            }
+        }
+    });
+}
 
 function NotificaSave() {
     Swal.fire({

@@ -29,6 +29,13 @@ namespace ViewMonitor.Controllers
             return View(_model);
         }
 
+        public async Task<IActionResult> MonitoreoVisualDetalle(string id)
+        {
+            var _model = await new SistemaMonitoreoGet(_context).GetDatosMonitorDetalle(id);
+
+            return PartialView("Shared/_MonitoreVisualDetalle",_model);
+        }
+
         public async Task<IActionResult> MantenedorMonitores()
         {
             var _model = await new SistemaMonitoreoGet(_context).GetMantenedorMonitores();
@@ -44,7 +51,7 @@ namespace ViewMonitor.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(new RetornoActionView { mnsj = "Falta llenar los campos obligatorios" });
             }
-           RetornoAccion rt =  await new SistemaMonitoreoPost(_context).PostMantenedorMonitoresEdit(_model);
+            RetornoAccion rt = await new SistemaMonitoreoPost(_context).PostMantenedorMonitoresEdit(_model);
 
             switch (rt.Code)
             {

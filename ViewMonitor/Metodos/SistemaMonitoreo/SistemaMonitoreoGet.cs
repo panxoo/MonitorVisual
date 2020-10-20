@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
             {
                 MonitorID = s.MonitorID,
                 MonitorNom = s.Nombre,
-                JobNom = s.Job_Monitor.Nombre,
                 MonitorEstado = s.Monitor_Estado.Estado,
                 Agrupacion = s.AgrupacionID,
                 Alarma = s.Alerta
@@ -34,6 +34,25 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
             _model.Agrupaciones = await _context.Agrupacions.ToListAsync();
 
+            return _model;
+        }
+
+         public async Task<MonitorVisualInput.MonitorEstadoDetalle> GetDatosMonitorDetalle(string id)
+        {
+            MonitorVisualInput.MonitorEstadoDetalle _model = new MonitorVisualInput.MonitorEstadoDetalle();
+         
+
+            _model = await _context.Monitors.Where(w => w.MonitorID.Equals(Convert.ToInt32(id))).Select(s => new MonitorVisualInput.MonitorEstadoDetalle
+            {
+                MonitorID = s.MonitorID,
+                MonitorNom = s.Nombre,
+                MonitorEstado = s.Monitor_Estado.Estado,
+                 MonitorDescripcion = s.Descripcion,
+                Alarma = s.Alerta,
+                FechaHistEst = s.Monitor_Estado.Fecha,
+                Procedimiento = s.Procedimiento
+            }).FirstOrDefaultAsync();
+          
             return _model;
         }
 

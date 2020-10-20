@@ -30,7 +30,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                 MonitorEstado = s.Monitor_Estado.Estado,
                 Agrupacion = s.AgrupacionID,
                 Alarma = s.Alerta
-            }).ToListAsync();
+            }).OrderBy(o => o.MonitorNom).ToListAsync();
 
             _model.Agrupaciones = await _context.Agrupacions.ToListAsync();
 
@@ -41,7 +41,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
         {
             MantenedorMonitoreInput _model = new MantenedorMonitoreInput();
 
-            _model.MonitoresDt = await _context.Monitors.Select(s => new MantenedorMonitoreInput.MonitoresDatos
+            _model.MonitoresDt = await  _context.Monitors.Select(s => new MantenedorMonitoreInput.MonitoresDatos
             {
                 MonitorID = s.MonitorID,
                 Nombre = s.Nombre,
@@ -53,7 +53,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                 Job_MonitorID = s.Job_MonitorID,
                 Procedimiento = s.Procedimiento,
                 Descripcion = s.Descripcion
-            }).ToListAsync();
+            }).OrderByDescending(o =>  o.Activo).ThenBy(t => t.Nombre).ToListAsync();
 
             _model.Agrupacions = await _context.Agrupacions.Select(s => new SelectListItem { Value = s.AgrupacionID.ToString(), Text = s.Nombre }).ToListAsync();
             _model.Job_Monitors = await _context.Job_Monitors.Select(s => new SelectListItem { Value = s.Job_MonitorID.ToString(), Text = s.Nombre }).ToListAsync();
@@ -74,12 +74,12 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
         public async Task<List<Agrupacion>> GetMantenedorAgrupacion()
         {
-            return await _context.Agrupacions.ToListAsync();
+            return await _context.Agrupacions.OrderBy(o => o.Nombre).ToListAsync();
         }
 
         public async Task<List<Job_Monitor>> GetMantenedorJobs()
         {
-            return await _context.Job_Monitors.ToListAsync();
+            return await _context.Job_Monitors.OrderBy(o => o.Nombre).ToListAsync();
         }
 
 

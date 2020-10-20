@@ -11,8 +11,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
     public class SistemaMonitoreoPost
     {
 
-        ApplicationDbContext _context;
-
+        ApplicationDbContext _context; 
         public SistemaMonitoreoPost(ApplicationDbContext context)
         {
             _context = context;

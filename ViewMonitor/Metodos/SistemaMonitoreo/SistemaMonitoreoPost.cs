@@ -5,6 +5,8 @@ using ViewMonitor.Data;
 using ViewMonitor.Models;
 using ViewMonitor.Models.Sistema;
 using ViewMonitor.Models.SistemaMonitoreo;
+using System.Linq;
+
 
 namespace ViewMonitor.Metodos.SistemaMonitoreo
 {
@@ -179,6 +181,13 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
             }
 
             return retornoAccion;
+        }
+
+        public async Task PostMonitoreoVisualExecJob(string id)
+        {
+            string job = await _context.Monitors.Where(w => w.MonitorID.Equals(Convert.ToInt32(id))).Select(s => s.Procedimiento).FirstOrDefaultAsync();
+
+          var ss =  await _context.Database.ExecuteSqlCommandAsync("exec " + job);
         }
     }
 }

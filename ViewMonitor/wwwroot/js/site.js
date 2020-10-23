@@ -40,6 +40,7 @@ AjaxSubmit.prototype.AjaxPop = function (_dt) {
                 if (_inputClear != null) {
                     _inputClear.forEach(function (input) {
                         $(input).val("");
+
                     });
                 };
             };
@@ -70,6 +71,36 @@ AjaxSubmit.prototype.AjaxPopOpen = function (_dt) {
         success: function (result) {
             if (result != null) {
                 $(_partial).html(result);                
+            };
+        },
+        error: function (result) {
+            MensajeError(_titleError, result.responseJSON.mnsj);
+            if (result.responseJSON.redir) {
+                setTimeout(function () {
+                    window.location.replace(result.responseJSON.redirectToUrl);
+                }, 3000);
+            }
+        }
+    });
+}
+
+AjaxSubmit.prototype.AjaxMonitor = function (_dt) {
+    _partial = this.partial;
+    _titleError = this.titleError;
+    _btnCancel = this.btnCancel; 
+
+    $.ajax({
+        url: this.url,
+        type: "post",
+        data: _dt,
+        cache: false,
+        success: function (result) {
+            if (result != null) {
+                $(_partial).html(result);  
+                RevisionAlarma();  
+                
+                if(_btnCancel != null)                
+                    $(_btnCancel).click();                
             };
         },
         error: function (result) {

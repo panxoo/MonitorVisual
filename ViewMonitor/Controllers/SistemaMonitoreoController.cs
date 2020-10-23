@@ -21,6 +21,11 @@ namespace ViewMonitor.Controllers
             _context = context;
         }
 
+        public IActionResult Index()
+        {
+                           return RedirectToAction(nameof(SistemaMonitoreoController.MonitoreoVisual), "SistemaMonitoreo");
+        }
+
 
         public async Task<IActionResult> MonitoreoVisual()
         {
@@ -33,7 +38,24 @@ namespace ViewMonitor.Controllers
         {
             var _model = await new SistemaMonitoreoGet(_context).GetDatosMonitorDetalle(id);
 
-            return PartialView("Shared/_MonitoreVisualDetalle",_model);
+            return PartialView("Shared/_MonitoreVisualDetalle", _model);
+        }
+
+        public async Task<IActionResult> MonitoreoVisualCall()
+        {
+            var _model = await new SistemaMonitoreoGet(_context).GetDatosMonitoreo();
+
+            return PartialView("Shared/_MonitoreoVisualMonitor", _model);
+        }
+
+
+        public async Task<IActionResult> MonitoreoVisualExecJob(string id)
+        {
+            await new SistemaMonitoreoPost(_context).PostMonitoreoVisualExecJob(id);
+
+            var _model = await new SistemaMonitoreoGet(_context).GetDatosMonitoreo();
+
+            return PartialView("Shared/_MonitoreoVisualMonitor", _model);
         }
 
         public async Task<IActionResult> MantenedorMonitores()

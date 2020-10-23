@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ViewMonitor.Data; 
+using ViewMonitor.Data;
 using ViewMonitor.Models;
 
 namespace ViewMonitor.Controllers
@@ -23,7 +19,8 @@ namespace ViewMonitor.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(SistemaMonitoreoController.MonitoreoVisual), "SistemaMonitoreo");
+
         }
 
         public IActionResult Privacy()
@@ -37,8 +34,8 @@ namespace ViewMonitor.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
- 
 
-        
+
+
     }
 }

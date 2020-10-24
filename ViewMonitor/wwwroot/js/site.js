@@ -6,6 +6,8 @@
     let relo = localStorage.getItem('Monitor-Reload');
 
 
+
+
 });
 
 function NotificaBtnMod(accion) {
@@ -25,6 +27,33 @@ $("#IconNotifiMod").click(function () {
     NotificaBtnMod(noti == "on" ? "off" : "on");
 });
 
+
+function ReloadOptionSel(add, rem) {
+    if (rem != null) {
+        $.each($("#LstAreAtencionHrMeEd li"), function () {
+            VisibleDivCheck($(this).data('sucurcont').includes(suc), this);
+        });
+
+        $.each($("#LstAreAtencionHrMeEd").find(":checkbox"), function () {
+            CheckedCheckbox("#" + this.id, false);
+        });
+
+        $(this).closest('tr').find('.arealst option').each(function () {
+            CheckedCheckbox("#" + $(this).val(), true);
+        });
+    }
+
+    $.each($("#ListReload li"), function () {
+        if ($(this).data('rel') == add) {
+            $(this).find(":i").first(function (e) {
+                $(e).addClass("dripicons-checkmark");
+            })
+        }
+    });
+
+    localStorage.setItem('Monitor-Reload',add);
+ 
+}
 
 
 

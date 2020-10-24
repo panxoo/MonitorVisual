@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ViewMonitor</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    
+
 
 
 
@@ -29,116 +29,114 @@
     <!-- ======================= LAYOUT TYPE ===========================-->
     <link rel="stylesheet" href="~/lib/assets/css/layouts/vertical/core/main.css">
     <!-- ======================= MENU TYPE ===========================================-->
-   <link rel="stylesheet" href="~/lib/assets/css/layouts/vertical/menu-type/overlay.css">
+    <link rel="stylesheet" href="~/lib/assets/css/layouts/vertical/menu-type/overlay.css">
     <!-- ======================= THEME COLOR STYLES ===========================-->
     <link rel="stylesheet" href="~/lib/assets/css/layouts/vertical/themes/theme-p.css">
 
 
-    <link rel="stylesheet" href="~/lib/assets/vendor/sweetalert2/dist/sweetalert2.min.css" /> 
+    <link rel="stylesheet" href="~/lib/assets/vendor/sweetalert2/dist/sweetalert2.min.css" />
 
 
 </head>
-<body  class="overlay-menu layout-fixed">
- 
+<body class="overlay-menu layout-fixed">
 
-<div id="app">
- 
 
-          <div class="content-wrapper">
-            	<nav class="top-toolbar navbar navbar-desktop flex-nowrap">
-					<ul class="navbar-nav nav-left">
-                       
-                        <li class="nav-item nav-text">
-							<a  asp-controller="SistemaMonitoreo" asp-action="Index" role="button" >
-								<span>
-									Monitoreo
-								</span>
-							</a>
-							
-						</li>
-					 
-						<li class="nav-item nav-text dropdown dropdown-menu-md">
-							<a href="javascript:void(0)" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								<span>
-									Mantenedores
-								</span>
-								<i class="la la-angle-down menu-arrow-down"></i>
-							</a>
-							<div class="dropdown-menu menu-icons dropdown-menu-left">
-								<div class="form-group form-filter">								
-									<ul class="list-reset filter-list" data-scroll="minimal-dark">
-										<li><a class="dropdown-item" asp-controller="SistemaMonitoreo" asp-action="MantenedorMonitores">Monitores</a></li>
-										<li><a class="dropdown-item" asp-controller="SistemaMonitoreo" asp-action="MantenedorParametros">Parametros</a></li>										
-									</ul>
-								</div>
-							</div>
-						</li>						
-					</ul>
-					<ul class="site-logo">
-						<li>
-							<!-- START LOGO -->
-								<a asp-action="index">
-									<div class="logo">
-										<img id="logo" width="25" height="25" viewBox="0 0 54.03 56.55" src="~/img/web-analytics.png">											 
-									</div>
-									<span class="brand-text">Monitoreo SIS</span>
-								</a>
-							<!-- END LOGO -->
-						</li>
-					</ul>
-					<ul class="navbar-nav nav-right">
-						
-						<li class="nav-item dropdown dropdown-menu-md">
-							<a href="javascript:void(0)" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								<i class="icon dripicons-time-reverse"></i>
-							</a>
-							<div class="dropdown-menu menu-icons dropdown-menu-right">
-								<div class="form-group form-filter">
-									<input type="text" placeholder="Filter location..." class="form-control filter-input" data-search-trigger="open">
-									<i data-q-action="clear-filter" class="icon dripicons-cross clear-filter"></i>
-									<ul class="list-reset filter-list" id="ListReload" data-scroll="minimal-dark">
-										<li class="d-flex justify-content-between align-items-center" data-rel="5"> <a class="dropdown-item ItemReload" href="#" data-sel="off">5 Min.</a><i class="icon "></i></li>
-										<li class="d-flex justify-content-between align-items-center" data-rel="10"> <a class="dropdown-item ItemReload" href="#" data-sel="off">10 Min.</a><i class="icon "></i></li>
-										<li class="d-flex justify-content-between align-items-center" data-rel="15"> <a class="dropdown-item ItemReload" href="#" data-sel="off">15 Min.</a><i class="icon "></i></li>
-										<li class="d-flex justify-content-between align-items-center" data-rel="20"> <a class="dropdown-item ItemReload" href="#" data-sel="off">20 Min.</a><i class="icon "></i></li>
-										<li class="d-flex justify-content-between align-items-center" data-rel="30"> <a class="dropdown-item ItemReload" href="#" data-sel="off">30 Min.</a><i class="icon "></i></li>
-										<li class="d-flex justify-content-between align-items-center" data-rel="40"> <a class="dropdown-item ItemReload" href="#" data-sel="off">40 Min.</a><i class="icon "></i></li>
-									</ul>
-								</div>
-							</div>
-						</li>
-						<li class="nav-item">
-							<a href="javascript:void(0)" role="button" id="IconNotifiMod" >
-								<i id="IconNotification" class="icon dripicons-volume-full" data-activo="on"></i>
-							</a>							
-						</li>
-						
-					</ul>					
-				</nav>
-			
-	<div class="content">
-				 
-        <!--END PAGE HEADER -->
-        <!--START PAGE CONTENT -->
+    <div id="app">
 
-        <main role="main">
-            @RenderBody()
-        </main>
+
+        <div class="content-wrapper">
+            <nav class="top-toolbar navbar navbar-desktop flex-nowrap">
+                <ul class="navbar-nav nav-left">
+
+                    <li class="nav-item nav-text">
+                        <a asp-controller="SistemaMonitoreo" asp-action="Index" role="button">
+                            <span>
+                                Monitoreo
+                            </span>
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item nav-text dropdown dropdown-menu-md">
+                        <a href="javascript:void(0)" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span>
+                                Mantenedores
+                            </span>
+                            <i class="la la-angle-down menu-arrow-down"></i>
+                        </a>
+                        <div class="dropdown-menu menu-icons dropdown-menu-left">
+                            <div class="form-group form-filter">
+                                <ul class="list-reset filter-list" data-scroll="minimal-dark">
+                                    <li><a class="dropdown-item" asp-controller="SistemaMonitoreo" asp-action="MantenedorMonitores">Monitores</a></li>
+                                    <li><a class="dropdown-item" asp-controller="SistemaMonitoreo" asp-action="MantenedorParametros">Parametros</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="site-logo">
+                    <li>
+                        <!-- START LOGO -->
+                        <a asp-action="index">
+                            <div class="logo">
+                                <img id="logo" width="25" height="25" viewBox="0 0 54.03 56.55" src="~/img/web-analytics.png">
+                            </div>
+                            <span class="brand-text">Monitoreo SIS</span>
+                        </a>
+                        <!-- END LOGO -->
+                    </li>
+                </ul>
+                <ul class="navbar-nav nav-right">
+
+                    <li class="nav-item dropdown dropdown-menu-md">
+                        <a href="javascript:void(0)" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon dripicons-time-reverse"></i>
+                        </a>
+                        <div class="dropdown-menu menu-icons dropdown-menu-right">
+                            <div class="form-group form-filter">
+                                <input type="text" placeholder="Filter location..." class="form-control filter-input" data-search-trigger="open">
+                                <i data-q-action="clear-filter" class="icon dripicons-cross clear-filter"></i>
+                                <ul class="list-reset filter-list" id="ListReload" data-scroll="minimal-dark">
+                                    <li class="d-flex justify-content-between align-items-center" data-rel="5"> <a class="dropdown-item ItemReload" href="#" data-sel="off">5 Min.</a><i class="icon "></i></li>
+                                    <li class="d-flex justify-content-between align-items-center" data-rel="10"> <a class="dropdown-item ItemReload" href="#" data-sel="off">10 Min.</a><i class="icon "></i></li>
+                                    <li class="d-flex justify-content-between align-items-center" data-rel="15"> <a class="dropdown-item ItemReload" href="#" data-sel="off">15 Min.</a><i class="icon "></i></li>
+                                    <li class="d-flex justify-content-between align-items-center" data-rel="20"> <a class="dropdown-item ItemReload" href="#" data-sel="off">20 Min.</a><i class="icon "></i></li>
+                                    <li class="d-flex justify-content-between align-items-center" data-rel="30"> <a class="dropdown-item ItemReload" href="#" data-sel="off">30 Min.</a><i class="icon "></i></li>
+                                    <li class="d-flex justify-content-between align-items-center" data-rel="40"> <a class="dropdown-item ItemReload" href="#" data-sel="off">40 Min.</a><i class="icon "></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" role="button" id="IconNotifiMod">
+                            <i id="IconNotification" class="icon dripicons-volume-full" data-activo="on"></i>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+
+            <div class="content">
+
+                <!--END PAGE HEADER -->
+                <!--START PAGE CONTENT -->
+
+                <main role="main">
+                    @RenderBody()
+                </main>
+
+
+
+            </div>
+
+
+
+        </div>
 
 
 
     </div>
 
- 
-		
-</div>
-
-
- 
-    </div>
-
- 
-	 
 
 
 
@@ -146,7 +144,9 @@
 
 
 
-  
+
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- ================== GLOBAL VENDOR SCRIPTS ==================-->

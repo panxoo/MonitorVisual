@@ -1,4 +1,39 @@
-﻿function CheckedCheckbox(objet, decicion) {
+﻿$(document).ready(function () {
+
+    let noti = localStorage.getItem('Monitor-Notifica');
+    NotificaBtnMod(noti == null ? "on" : noti);
+
+    let relo = localStorage.getItem('Monitor-Reload');
+
+
+});
+
+function NotificaBtnMod(accion) {
+
+    if (accion == "on") {
+        $("#IconNotification").removeClass("dripicons-volume-off").addClass("dripicons-volume-full");
+    } else {
+        $("#IconNotification").removeClass("dripicons-volume-full").addClass("dripicons-volume-off");
+    }
+
+    localStorage.setItem("Monitor-Notifica", accion);
+}
+
+$("#IconNotifiMod").click(function () {
+    let noti = localStorage.getItem('Monitor-Notifica');
+
+    NotificaBtnMod(noti == "on" ? "off" : "on");
+});
+
+
+
+
+
+
+
+
+
+function CheckedCheckbox(objet, decicion) {
     if (decicion) {
         $(objet).attr("checked", "checked");
         $(objet).prop("checked", true);
@@ -70,7 +105,7 @@ AjaxSubmit.prototype.AjaxPopOpen = function (_dt) {
         cache: false,
         success: function (result) {
             if (result != null) {
-                $(_partial).html(result);                
+                $(_partial).html(result);
             };
         },
         error: function (result) {
@@ -87,7 +122,7 @@ AjaxSubmit.prototype.AjaxPopOpen = function (_dt) {
 AjaxSubmit.prototype.AjaxMonitor = function (_dt) {
     _partial = this.partial;
     _titleError = this.titleError;
-    _btnCancel = this.btnCancel; 
+    _btnCancel = this.btnCancel;
 
     $.ajax({
         url: this.url,
@@ -96,11 +131,11 @@ AjaxSubmit.prototype.AjaxMonitor = function (_dt) {
         cache: false,
         success: function (result) {
             if (result != null) {
-                $(_partial).html(result);  
-                RevisionAlarma();  
-                
-                if(_btnCancel != null)                
-                    $(_btnCancel).click();                
+                $(_partial).html(result);
+                RevisionAlarma();
+
+                if (_btnCancel != null)
+                    $(_btnCancel).click();
             };
         },
         error: function (result) {

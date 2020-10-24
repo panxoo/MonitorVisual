@@ -4,7 +4,7 @@
     NotificaBtnMod(noti == null ? "on" : noti);
 
     let relo = localStorage.getItem('Monitor-Reload');
-
+    ReloadOptionSel(relo == null ? "5" : relo);
 
 
 

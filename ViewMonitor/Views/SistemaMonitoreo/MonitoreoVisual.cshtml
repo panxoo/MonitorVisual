@@ -45,13 +45,21 @@ Layout = "~/Views/Shared/_Layout.cshtml";
     $(document).ready(function () {
 
        RevisionAlarma();
-       reloadMonitor = setInterval(CallAlarma,600000);
-
+       reloadTime = localStorage.getItem('Monitor-Reload');
+       reloadMonitor = setInterval(CallAlarma,reloadTime * 60000);
     });
 
     var reloadMonitor;
+    var reloadTime;
 
     function RevisionAlarma(){
+
+        let not =  localStorage.getItem('Monitor-Notifica')
+        if(not == "off")
+        {
+            return;
+        }
+
         if (Notification) {
             if (Notification.permission !== "granted") {
                 Notification.requestPermission()
@@ -99,6 +107,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
         post.partial = "#MonitoresPart";
     
         post.AjaxMonitor();   
+       
     }
 
     function DetalleMonitor(e) {
@@ -131,6 +140,23 @@ Layout = "~/Views/Shared/_Layout.cshtml";
         post.AjaxMonitor(dt);
 
     }); 
+
+    $(".ItemReload").click(function(){ 
+        let relaux = localStorage.getItem('Monitor-Reload');
+
+        if(relaux == null || relaux == "")
+        {
+            relaux = 5;
+            localStorage.setItem('Monitor-Reload',relaux);
+        }
+
+        if(relaux != reloadTime) 
+        {
+            clearInterval(reloadMonitor);
+            reloadTime = relaux;
+            reloadMonitor = setInterval(CallAlarma,reloadTime * 60000);
+        }
+    });
 
 
 

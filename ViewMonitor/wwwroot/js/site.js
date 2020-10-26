@@ -1,12 +1,10 @@
 ﻿$(document).ready(function () {
 
     let noti = localStorage.getItem('Monitor-Notifica');
-    NotificaBtnMod(noti == null ? "on" : noti);
+    NotificaBtnMod(noti == null || noti == "" ? "on" : noti);
 
     let relo = localStorage.getItem('Monitor-Reload');
-    ReloadOptionSel(relo == null ? "5" : relo);
-
-
+    ReloadOptionSel(relo == null || relo == "" ? "5" : relo);
 
 });
 
@@ -29,33 +27,38 @@ $("#IconNotifiMod").click(function () {
 
 
 function ReloadOptionSel(add, rem) {
-    if (rem != null) {
-        $.each($("#LstAreAtencionHrMeEd li"), function () {
-            VisibleDivCheck($(this).data('sucurcont').includes(suc), this);
+    if (rem != null && rem != '') {
+        $.each($("#ListReload li"), function () {
+            if ($(this).data('rel') == rem) {
+                $(this).find("i").removeClass("dripicons-checkmark");
+            }
         });
-
-        $.each($("#LstAreAtencionHrMeEd").find(":checkbox"), function () {
-            CheckedCheckbox("#" + this.id, false);
-        });
-
-        $(this).closest('tr').find('.arealst option').each(function () {
-            CheckedCheckbox("#" + $(this).val(), true);
+    } else {
+        $("#ListReload li").find("i").each(function () {
+            $(this).removeClass("dripicons-checkmark");
         });
     }
 
     $.each($("#ListReload li"), function () {
         if ($(this).data('rel') == add) {
-            $(this).find(":i").first(function (e) {
-                $(e).addClass("dripicons-checkmark");
-            })
+            $(this).find("i").addClass("dripicons-checkmark");
         }
     });
 
-    localStorage.setItem('Monitor-Reload',add);
- 
+    localStorage.setItem('Monitor-Reload', add);
 }
 
 
+$(".ItemReload").click(function () {
+    let noti = localStorage.getItem('Monitor-Reload');
+
+    let notinew = $(this).closest('li').data("rel");
+
+    if (noti != notinew) {
+        ReloadOptionSel(notinew, noti);
+    }
+
+});
 
 
 

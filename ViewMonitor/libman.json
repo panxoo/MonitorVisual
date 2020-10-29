@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "bootstrap-table@1.18.0",
+      "destination": "wwwroot/lib/assets/vendor/bootstrap-table/",
+      "files": [
+        "extensions/export/bootstrap-table-export.js",
+        "extensions/export/bootstrap-table-export.min.js"
+      ]
+    }
+  ]
+}

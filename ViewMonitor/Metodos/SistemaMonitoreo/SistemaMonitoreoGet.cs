@@ -32,7 +32,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                 Alarma = s.Alerta
             }).OrderBy(o => o.MonitorNom).ToListAsync();
 
-            _model.Agrupaciones = await _context.Agrupacions.ToListAsync();
+            _model.Agrupaciones = await _context.Agrupacions.Where(w => w.Activo).ToListAsync();
 
             return _model;
         }
@@ -74,8 +74,8 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                 Descripcion = s.Descripcion
             }).OrderByDescending(o =>  o.Activo).ThenBy(t => t.Nombre).ToListAsync();
 
-            _model.Agrupacions = await _context.Agrupacions.Select(s => new SelectListItem { Value = s.AgrupacionID.ToString(), Text = s.Nombre }).ToListAsync();
-            _model.Job_Monitors = await _context.Job_Monitors.Select(s => new SelectListItem { Value = s.Job_MonitorID.ToString(), Text = s.Nombre }).ToListAsync();
+            _model.Agrupacions = await _context.Agrupacions.Where(w => w.Activo).Select(s => new SelectListItem { Value = s.AgrupacionID.ToString(), Text = s.Nombre }).ToListAsync();
+            _model.Job_Monitors = await _context.Job_Monitors.Where(w => w.Activo).Select(s => new SelectListItem { Value = s.Job_MonitorID.ToString(), Text = s.Nombre }).ToListAsync();
 
             return _model;
         }
@@ -93,12 +93,12 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
         public async Task<List<Agrupacion>> GetMantenedorAgrupacion()
         {
-            return await _context.Agrupacions.OrderBy(o => o.Nombre).ToListAsync();
+            return await _context.Agrupacions.OrderByDescending(o => o.Activo).ThenBy(o => o.Nombre).ToListAsync();
         }
 
         public async Task<List<Job_Monitor>> GetMantenedorJobs()
         {
-            return await _context.Job_Monitors.OrderBy(o => o.Nombre).ToListAsync();
+            return await _context.Job_Monitors.OrderByDescending(o => o.Activo).ThenBy(o => o.Nombre).ToListAsync();
         }
 
 

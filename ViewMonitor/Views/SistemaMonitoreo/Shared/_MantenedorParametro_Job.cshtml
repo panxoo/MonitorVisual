@@ -4,6 +4,12 @@
     <thead class="thead-dark">
         <tr>
             <th>
+                Activo
+            </th>
+            <th>
+                Identificador
+            </th>
+            <th>
                 Jobs Nombre
             </th>
             <th>
@@ -15,12 +21,29 @@
         @foreach (Job_Monitor item in Model)
         {
             <tr>
+                <td>
+                    @if (item.Activo)
+                    {
+                        <label class="badge badge-pill badge-success">Activo</label>
+                    }
+                    else
+                    {
+                        <label class="badge badge-pill badge-danger">Inactivo</label>
+                    }
+                </td>
+                <td> @Html.DisplayFor(modelItem => item.Job_MonitorID) </td>
                 <td class="nameJob">@Html.DisplayFor(modelItem => item.Nombre)</td>
                 <td>
-                    <a class="BtnMonitoresEdit" onclick="levantarJob(this)" title="Editar Medico" data-id="@item.Job_MonitorID">
+                    <a class="BtnMonitoresEdit" onclick="levantarJob(this)" title="Editar Jobs"
+                    data-id="@item.Job_MonitorID">
+                        <i class="far fa-edit fa-2x"></i>
+                    </a>
+                    <a class="BtnMonitoresEdit" onclick="eliminarJob(this)" title="Eliminar Jobs"
+                    data-id="@item.Job_MonitorID">
                         <i class="far fa-edit fa-2x"></i>
                     </a>
                 </td>
+
             </tr>
         }
     </tbody>

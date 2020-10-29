@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 using ViewMonitor.Data;
@@ -13,7 +14,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
     public class SistemaMonitoreoPost
     {
 
-        ApplicationDbContext _context; 
+        ApplicationDbContext _context;
         public SistemaMonitoreoPost(ApplicationDbContext context)
         {
             _context = context;
@@ -187,7 +188,51 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
         {
             string job = await _context.Monitors.Where(w => w.MonitorID.Equals(Convert.ToInt32(id))).Select(s => s.Procedimiento).FirstOrDefaultAsync();
 
-          var ss =  await _context.Database.ExecuteSqlCommandAsync("exec " + job);
+            var ss = await _context.Database.ExecuteSqlCommandAsync("exec " + job);
+        }
+
+        public async Task<RetornoAccion> PostMantenedorAgrupacionDel(int id)
+        {
+            RetornoAccion retornoAccion = new RetornoAccion { Code = 0 };
+            Agrupacion _dtAgrp = await _context.Agrupacions.FirstOrDefaultAsync(f => f.AgrupacionID.Equals(id));
+
+            if (_dtAgrp.Activo)
+            {
+                if (await _context.Monitors.AnyAsync(a => a.AgrupacionID.Equals(id) && a.Activo))
+                {
+                    retornoAccion = new RetornoAccion { Code = 1, Mensaje = "No se puede desactivar, hay monitores activos asignados al grupo" };
+                }
+            }
+
+            if (retornoAccion.Code.Equals(0))
+            {
+                _dtAgrp.Activo = !_dtAgrp.Activo;
+                await _context.SaveChangesAsync();
+                retornoAccion.Parametro = await new SistemaMonitoreoGet(_context).GetMantenedorAgrupacion();
+            }
+            return retornoAccion;
+        }
+
+         public async Task<RetornoAccion> PostMantenedorJobsDel(int id)
+        {
+            RetornoAccion retornoAccion = new RetornoAccion { Code = 0 };
+            Job_Monitor _dtJob = await _context.Job_Monitors.FirstOrDefaultAsync(f => f.Job_MonitorID.Equals(id));
+
+            if (_dtJob.Activo)
+            {
+                if (await _context.Monitors.AnyAsync(a => a.Job_MonitorID.Equals(id) && a.Activo))
+                {
+                    retornoAccion = new RetornoAccion { Code = 1, Mensaje = "No se puede desactivar, hay monitores activos asignados al JOB" };
+                }
+            }
+
+            if (retornoAccion.Code.Equals(0))
+            {
+                _dtJob.Activo = !_dtJob.Activo;
+                await _context.SaveChangesAsync();
+                retornoAccion.Parametro = await new SistemaMonitoreoGet(_context).GetMantenedorJobs();
+            }
+            return retornoAccion;
         }
     }
 }

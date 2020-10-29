@@ -23,7 +23,7 @@ namespace ViewMonitor.Controllers
 
         public IActionResult Index()
         {
-                           return RedirectToAction(nameof(SistemaMonitoreoController.MonitoreoVisual), "SistemaMonitoreo");
+            return RedirectToAction(nameof(SistemaMonitoreoController.MonitoreoVisual), "SistemaMonitoreo");
         }
 
 
@@ -148,6 +148,57 @@ namespace ViewMonitor.Controllers
                 case 0:
                     Response.StatusCode = (int)HttpStatusCode.OK;
                     return PartialView("Shared/_MantenedorParametro_Agrupacion", rt.Parametro);
+                case 1:
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new RetornoActionView { mnsj = rt.Mensaje });
+                default:
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new RetornoActionView
+                    {
+                        redirectToUrl = Url.Action(nameof(SistemaMonitoreoController.MantenedorParametros), "SistemaMonitoreo"),
+                        redir = true,
+                        mnsj = string.IsNullOrEmpty(rt.Mensaje) ? "Error en el registro, volver abrir pantalla para registro." : rt.Mensaje
+                    });
+            }
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> MantenedorAgrupacionDel(int id)
+        {
+            RetornoAccion rt = await new SistemaMonitoreoPost(_context).PostMantenedorAgrupacionDel(id);
+
+            switch (rt.Code)
+            {
+                case 0:
+                    Response.StatusCode = (int)HttpStatusCode.OK;
+                    return PartialView("Shared/_MantenedorParametro_Agrupacion", rt.Parametro);
+                case 1:
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new RetornoActionView { mnsj = rt.Mensaje });
+                default:
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new RetornoActionView
+                    {
+                        redirectToUrl = Url.Action(nameof(SistemaMonitoreoController.MantenedorParametros), "SistemaMonitoreo"),
+                        redir = true,
+                        mnsj = string.IsNullOrEmpty(rt.Mensaje) ? "Error en el registro, volver abrir pantalla para registro." : rt.Mensaje
+                    });
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MantenedorJobDel(int id)
+        {
+            RetornoAccion rt = await new SistemaMonitoreoPost(_context).PostMantenedorJobsDel(id);
+
+            switch (rt.Code)
+            {
+                case 0:
+                    Response.StatusCode = (int)HttpStatusCode.OK;
+                    return PartialView("Shared/_MantenedorParametro_Job", rt.Parametro);
                 case 1:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView { mnsj = rt.Mensaje });

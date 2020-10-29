@@ -2,7 +2,10 @@
 
 <table class="table">
     <thead class="thead-dark">
-        <tr>            
+        <tr>  
+            <th>
+                Activo
+            </th>          
             <th>
                 Grupo Nombre
             </th>            
@@ -15,9 +18,22 @@
         @foreach (Agrupacion item in Model)
         {
             <tr>
+                <td>
+                    @if (item.Activo)
+                    {
+                        <label class="badge badge-pill badge-success">Activo</label>
+                    }
+                    else
+                    {
+                        <label class="badge badge-pill badge-danger">Inactivo</label>
+                    }
+                </td>
                 <td class="nameAgrup">@Html.DisplayFor(modelItem => item.Nombre)</td>                
                 <td>
-                    <a class="BtnMonitoresEdit" onclick="levantarAgrup(this)" title="Editar Medico" data-id="@item.AgrupacionID">
+                    <a class="BtnMonitoresEdit" onclick="levantarAgrup(this)" title="Editar Grupo" data-id="@item.AgrupacionID">
+                        <i class="far fa-edit fa-2x"></i>
+                    </a>
+                    <a class="BtnAgrupacionDel" onclick="eliminarAgrupo(this)" title="Eliminar Grupo" data-id="@item.AgrupacionID">
                         <i class="far fa-edit fa-2x"></i>
                     </a>
                 </td>

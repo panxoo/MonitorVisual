@@ -11,6 +11,7 @@ namespace ViewMonitor.Models
         [Required(ErrorMessage = "Se requiere ingresar el nombre del Job")]
 
         public string Nombre { get; set; }
+        public bool Activo {get;set;}
         public List<Monitor> Monitors { get; set; }
     }
 }

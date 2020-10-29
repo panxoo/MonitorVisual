@@ -160,7 +160,24 @@
         }
     }
 
+    function eliminarAgrupo(e) {
+            
 
+        let post = new AjaxSubmit('@Url.Action("MantenedorAgrupacionDel", "SistemaMonitoreo")', "", "Error almacenamiento");
+        post.partial = "#GrupoMant";
+
+        let dt = {id: $(e).data('id')};
+        post.AjaxPop(dt);
+
+    }
+
+    function eliminarJob(e){
+          let post = new AjaxSubmit('@Url.Action("MantenedorJobDel", "SistemaMonitoreo")', "", "Error almacenamiento");
+        post.partial = "#JobMant";
+
+        let dt = {id: $(e).data('id')};
+        post.AjaxPop(dt);
+    }
     </script>
 
 

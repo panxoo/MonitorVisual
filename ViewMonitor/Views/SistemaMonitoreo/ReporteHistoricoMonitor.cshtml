@@ -1,0 +1,93 @@
+@model ReporteHistoricoInput
+
+@{
+ViewData["Title"] = "ReporteHistoricoMonitor";
+}
+
+<style>
+#toolbar {
+  margin: 0;
+}
+</style>
+
+<section class="page-content container-fluid">
+
+    <div class="row">
+
+        <div class="col-12">
+            <form action="post" id="FormFilter">
+                <div class="card">
+                    <h5 class="card-header">Filtro de busqueda</h5>
+
+
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label asp-for="MonitorId"> </label>
+                                <select asp-for="MonitorId" class="form-control">
+                                    <option value="-1" selected>Sin Filtrar</option>
+                                    @foreach (SelectListItem item in Model.Monitores)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label asp-for="FechaIni"></label>
+                                <input type="date" class="form-control" asp-for="FechaIni" autocomplete="off">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label asp-for="FechaFin"></label>
+                                <input type="date" class="form-control" asp-for="FechaFin" autocomplete="off">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-footer">
+                        <input type="submit" value="Filtrar" class="btn btn-success" id="btnFilter">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                <h5 class="card-header">Reporte Historico</h5>
+                <div class="card-body">
+                    <div id="datosMonit">
+                        <partial name="Shared/_ReporteHistoricoMonitorDatos" model="@Model.ReporteHistorials" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+
+@section Scripts{
+
+
+
+<script type="text/javascript">
+    $("#FormFilter").submit(function (e) {
+        e.preventDefault();
+        let post = new AjaxSubmit('@Url.Action("ReporteHistoricoMonitorFilter", "SistemaMonitoreo")', "#btnFilter", "Error en obtener datos");
+        post.partial = "#datosMonit"
+        
+        dt={
+            fechaIni: $("#FechaIni").val(), 
+            fechaFin: $("#FechaFin").val(), 
+            id: $("#MonitorId").val()  
+        };
+
+        post.ObtenerDatos(dt);
+
+    }); 
+</script>
+}

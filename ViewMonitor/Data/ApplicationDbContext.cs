@@ -19,6 +19,7 @@ namespace ViewMonitor.Data
         public DbSet<Job_Monitor> Job_Monitors { get; set; }
         public DbSet<Agrupacion> Agrupacions { get; set; }
         public DbSet<Monitor_Estado_Hist> Monitor_Estado_Hists { get; set; }
+        public DbSet<ViewHistEstadoMonitor> ViewHistEstadoMonitors {get;set;} 
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -42,6 +43,12 @@ namespace ViewMonitor.Data
                    .HasOne(a => a.Monitor_Estado)
                    .WithOne(a => a.Monitor)
                    .HasForeignKey<Monitor_Estado>(a => a.MonitorID);
+
+            builder.Entity<ViewHistEstadoMonitor>(eb =>
+            {
+                eb.HasNoKey();
+                eb.ToView("view_hist_estado_monitor");
+            });
                    
 
             base.OnModelCreating(builder);

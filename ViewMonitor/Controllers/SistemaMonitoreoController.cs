@@ -213,5 +213,21 @@ namespace ViewMonitor.Controllers
             }
 
         }
+
+        public async Task<IActionResult> ReporteHistoricoMonitor()
+        {
+            var _model = await new SistemaMonitoreoGet(_context).GetReporteHistoricoMonitor();
+
+            return View(_model);
+        }
+
+        public async Task<IActionResult> ReporteHistoricoMonitorFilter(DateTime fechaIni, DateTime fechaFin, int id)
+        {
+            var _model = await new SistemaMonitoreoGet(_context).GetReporteHistoricoMonitorDt(fechaIni, fechaFin, id);
+
+             Response.StatusCode = (int)HttpStatusCode.OK;
+
+            return PartialView("Shared/_ReporteHistoricoMonitorDatos", _model);
+        }
     }
 }

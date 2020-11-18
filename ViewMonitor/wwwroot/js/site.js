@@ -181,6 +181,38 @@ AjaxSubmit.prototype.AjaxMonitor = function (_dt) {
     });
 }
 
+
+AjaxSubmit.prototype.ObtenerDatos = function (_dt) {
+    _partial = this.partial;
+    _titleError = this.titleError;
+    _btnSubmit = this.btnSubmit;
+
+    $(this.btnSubmit).prop("disabled", true);
+
+    $.ajax({
+        url: this.url,
+        data: _dt,
+        type: "post",
+        cache: false,
+        success: function (result) {
+            if (result != null) {
+                $(_partial).html(result);
+            };
+        },
+        error: function (result) {
+            MensajeError(_titleError, result.responseJSON.mnsj);
+            if (result.responseJSON.redir) {
+                setTimeout(function () {
+                    window.location.replace(result.responseJSON.redirectToUrl);
+                }, 3000);
+            }
+        },
+        complete: function () {
+            $(_btnSubmit).prop("disabled", false);
+        }
+    });
+}
+
 function NotificaSave() {
     Swal.fire({
         position: 'top-end',

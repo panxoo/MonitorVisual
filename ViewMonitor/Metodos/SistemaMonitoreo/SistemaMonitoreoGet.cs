@@ -37,22 +37,22 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
             return _model;
         }
 
-         public async Task<MonitorVisualInput.MonitorEstadoDetalle> GetDatosMonitorDetalle(string id)
+        public async Task<MonitorVisualInput.MonitorEstadoDetalle> GetDatosMonitorDetalle(string id)
         {
             MonitorVisualInput.MonitorEstadoDetalle _model = new MonitorVisualInput.MonitorEstadoDetalle();
-         
+
 
             _model = await _context.Monitors.Where(w => w.MonitorID.Equals(Convert.ToInt32(id))).Select(s => new MonitorVisualInput.MonitorEstadoDetalle
             {
                 MonitorID = s.MonitorID,
                 MonitorNom = s.Nombre,
                 MonitorEstado = s.Monitor_Estado.Estado,
-                 MonitorDescripcion = s.Descripcion,
+                MonitorDescripcion = s.Descripcion,
                 Alarma = s.Alerta,
                 FechaHistEst = s.Monitor_Estado.Fecha,
                 Procedimiento = s.Procedimiento
             }).FirstOrDefaultAsync();
-          
+
             return _model;
         }
 
@@ -60,7 +60,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
         {
             MantenedorMonitoreInput _model = new MantenedorMonitoreInput();
 
-            _model.MonitoresDt = await  _context.Monitors.Select(s => new MantenedorMonitoreInput.MonitoresDatos
+            _model.MonitoresDt = await _context.Monitors.Select(s => new MantenedorMonitoreInput.MonitoresDatos
             {
                 MonitorID = s.MonitorID,
                 Nombre = s.Nombre,
@@ -72,7 +72,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                 Job_MonitorID = s.Job_MonitorID,
                 Procedimiento = s.Procedimiento,
                 Descripcion = s.Descripcion
-            }).OrderByDescending(o =>  o.Activo).ThenBy(t => t.Nombre).ToListAsync();
+            }).OrderByDescending(o => o.Activo).ThenBy(t => t.Nombre).ToListAsync();
 
             _model.Agrupacions = await _context.Agrupacions.Where(w => w.Activo).Select(s => new SelectListItem { Value = s.AgrupacionID.ToString(), Text = s.Nombre }).ToListAsync();
             _model.Job_Monitors = await _context.Job_Monitors.Where(w => w.Activo).Select(s => new SelectListItem { Value = s.Job_MonitorID.ToString(), Text = s.Nombre }).ToListAsync();
@@ -100,6 +100,48 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
         {
             return await _context.Job_Monitors.OrderByDescending(o => o.Activo).ThenBy(o => o.Nombre).ToListAsync();
         }
+
+        public async Task<ReporteHistoricoInput> GetReporteHistoricoMonitor()
+        {
+
+            ReporteHistoricoInput _model = new ReporteHistoricoInput();
+
+            _model.FechaIni = DateTime.Today.AddMonths(-3);
+            _model.FechaFin = DateTime.Today;
+            _model.Monitores = await _context.Monitors.Where(w => w.Activo).Select(s => new SelectListItem { Value = s.MonitorID.ToString(), Text = s.Nombre }).OrderBy(o => o.Text).ToListAsync();
+
+            _model.ReporteHistorials = new List<ViewHistEstadoMonitor>();
+
+
+            return _model;
+        }
+
+        public async Task<List<ViewHistEstadoMonitor>> GetReporteHistoricoMonitorDt(DateTime fechaIni, DateTime fechaFin, int? monit)
+        {
+
+            List<ViewHistEstadoMonitor> _model = new List<ViewHistEstadoMonitor>();
+
+try {
+            if (monit == -1)
+
+                _model = await _context.ViewHistEstadoMonitors.Where(w => w.FechaError.Date >= fechaIni.Date && w.FechaError.Date <= fechaFin.Date)
+                                                            .OrderByDescending(o => o.FechaError).ThenBy(o => o.Nombre).ToListAsync();
+
+            else
+
+                _model = await _context.ViewHistEstadoMonitors.Where(w => w.FechaError.Date >= fechaIni.Date && w.FechaError.Date <= fechaFin.Date && w.MonitorID.Equals(monit))
+                                                            .OrderByDescending(o => o.FechaError).ThenBy(o => o.Nombre).ToListAsync();
+
+}
+catch (Exception ex)
+{
+
+}
+            return _model;
+
+            }
+        
+
 
 
 

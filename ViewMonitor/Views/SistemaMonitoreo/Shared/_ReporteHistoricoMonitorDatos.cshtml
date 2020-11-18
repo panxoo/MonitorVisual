@@ -1,0 +1,51 @@
+@model List<ViewHistEstadoMonitor>
+
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>  
+            <th>
+                Nombre
+            </th>          
+            <th>
+                Fecha Alarma
+            </th>            
+            <th>
+                Fecha Solución
+            </th>
+            <th>
+                Falso Positivo
+            </th>
+            <th>
+                Nota
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ViewHistEstadoMonitor item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaError)
+                </td>
+                <td>
+                    @if (item.Solucion)
+                    {
+                        @Html.DisplayFor(modelItem => item.FechaSolucion)
+
+                    }
+                    else
+                    {
+                        <label class="badge badge-pill badge-danger">Continua Error</label>
+                    }
+                </td>
+                <td class="nameAgrup">@Html.DisplayFor(modelItem => item.FalsoPositivo)</td>     
+                <td class="nameAgrup">@Html.DisplayFor(modelItem => item.Nota)</td>                
+
+            </tr>
+        }
+    </tbody>
+</table>

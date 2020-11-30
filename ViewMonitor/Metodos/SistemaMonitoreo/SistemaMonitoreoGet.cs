@@ -121,26 +121,27 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
             List<ViewHistEstadoMonitor> _model = new List<ViewHistEstadoMonitor>();
 
-try {
-            if (monit == -1)
+            try
+            {
+                if (monit == -1)
 
-                _model = await _context.ViewHistEstadoMonitors.Where(w => w.FechaError.Date >= fechaIni.Date && w.FechaError.Date <= fechaFin.Date)
-                                                            .OrderByDescending(o => o.FechaError).ThenBy(o => o.Nombre).ToListAsync();
+                    _model = await _context.ViewHistEstadoMonitors.Where(w => w.FechaError.Date >= fechaIni.Date && w.FechaError.Date <= fechaFin.Date)
+                                                                .OrderByDescending(o => o.FechaError).ThenBy(o => o.Nombre).ToListAsync();
 
-            else
+                else
 
-                _model = await _context.ViewHistEstadoMonitors.Where(w => w.FechaError.Date >= fechaIni.Date && w.FechaError.Date <= fechaFin.Date && w.MonitorID.Equals(monit))
-                                                            .OrderByDescending(o => o.FechaError).ThenBy(o => o.Nombre).ToListAsync();
-
-}
-catch (Exception ex)
-{
-
-}
-            return _model;
+                    _model = await _context.ViewHistEstadoMonitors.Where(w => w.FechaError.Date >= fechaIni.Date && w.FechaError.Date <= fechaFin.Date && w.MonitorID.Equals(monit))
+                                                                .OrderByDescending(o => o.FechaError).ThenBy(o => o.Nombre).ToListAsync();
 
             }
-        
+            catch (Exception ex)
+            {
+
+            }
+            return _model;
+
+        }
+
 
 
 

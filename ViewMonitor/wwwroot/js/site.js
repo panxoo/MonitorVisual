@@ -83,6 +83,7 @@ function AjaxSubmit(_url, _btnSubmit, _titleError) {
     this.titleError = _titleError;
     this.divBlock;
     this.inputClear;
+    this.tablereload;
 }
 
 AjaxSubmit.prototype.AjaxPop = function (_dt) {
@@ -186,6 +187,8 @@ AjaxSubmit.prototype.ObtenerDatos = function (_dt) {
     _partial = this.partial;
     _titleError = this.titleError;
     _btnSubmit = this.btnSubmit;
+    _tablereload = this.tablereload;
+    console.log(_tablereload);
 
     $(this.btnSubmit).prop("disabled", true);
 
@@ -197,6 +200,11 @@ AjaxSubmit.prototype.ObtenerDatos = function (_dt) {
         success: function (result) {
             if (result != null) {
                 $(_partial).html(result);
+                if(_tablereload != null)
+                {
+                   $(_tablereload).DataTable();
+                   console.log(_tablereload);
+                }
             };
         },
         error: function (result) {
@@ -212,6 +220,8 @@ AjaxSubmit.prototype.ObtenerDatos = function (_dt) {
         }
     });
 }
+
+
 
 function NotificaSave() {
     Swal.fire({

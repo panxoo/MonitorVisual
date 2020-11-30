@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ViewMonitor.Data;
@@ -16,9 +18,11 @@ namespace ViewMonitor.Controllers
     public class SistemaMonitoreoController : Controller
     {
         ApplicationDbContext _context;
-        public SistemaMonitoreoController(ApplicationDbContext context)
+        private IHostingEnvironment _hostingEnvironment;
+        public SistemaMonitoreoController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public IActionResult Index()
@@ -225,9 +229,39 @@ namespace ViewMonitor.Controllers
         {
             var _model = await new SistemaMonitoreoGet(_context).GetReporteHistoricoMonitorDt(fechaIni, fechaFin, id);
 
-             Response.StatusCode = (int)HttpStatusCode.OK;
+            Response.StatusCode = (int)HttpStatusCode.OK;
 
             return PartialView("Shared/_ReporteHistoricoMonitorDatos", _model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ExportHistMonit(DateTime FechaIni, DateTime FechaFin, int MonitorId)
+        {
+            var _model = await new SistemaMonitoreoGet(_context).GetReporteHistoricoMonitorDt(FechaIni, FechaFin, MonitorId);
+
+            string sWebRootFolder = _hostingEnvironment.WebRootPath;
+            string sFileName = @"Reporte Historico Monitor.xlsx";
+            string URL = string.Format("{0}://{1}/{2}", Request.Scheme, Request.Host, sFileName);
+            FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, sFileName));
+            var memory = new MemoryStream();
+            using (var fs = new FileStream(Path.Combine(sWebRootFolder, sFileName), FileMode.Create, FileAccess.Write))
+            {
+
+                var _dr = new GenereacionReporte(_context).GeneracionExcelHistoricoEstado(_model);
+                _dr.Write(fs);
+
+            }
+
+            using (var stream = new FileStream(Path.Combine(sWebRootFolder, sFileName), FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            Response.StatusCode = (int)HttpStatusCode.OK;
+
+            return File(memory, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", sFileName);
+
         }
     }
 }

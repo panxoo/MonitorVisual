@@ -1,21 +1,43 @@
 @model List<ViewHistEstadoMonitor>
 
+<div class="form-group">
+
+    <a href="#" title="Deseleccionar todo" onclick="USelectAll()" class="align-top">
+        <i class="far fa-square fa-1x text-info "></i>
+    </a>
+
+    <a href="#" title="Seleccionar todo" onclick="SelectAll()" class="align-top">
+        <i class="far fa-check-square fa-1x text-info "></i>
+    </a>
+
+    <a href="#" title="Deseleccionar todo" onclick="UpMultiEditar()" class="m-l-20">
+        <i class="fas fa-file-signature fa-2x text-success "></i>
+    </a>
+
+<!--
+    <button type="button" class="btn btn-secondary la-square" data-dismiss="modal" id="BtnSellAll"
+        onclick="USelectAll()">Cancelar</button>
+    <button type="button" class="btn btn-success fa-check-square" id="BtnUSellAll" onclick="SelectAll()">Guardar</button>
+    <button type="button" class="btn btn-success" id="ModificarBtnFalsoPst" onclick="UpMultiEditar()">Modificar</button>
+
+-->
+</div>
 
 <table id="bs4-table" class="table table-striped table-bordered" style="width:100%">
     <thead class="thead-dark">
-        <tr>  
+        <tr>
             <th>
                 Opt
-            </th>  
+            </th>
             <th>
                 Selec
             </th>
             <th>
                 Nombre
-            </th>          
+            </th>
             <th>
                 Fecha Alarma
-            </th>            
+            </th>
             <th>
                 Fecha Solución
             </th>
@@ -32,14 +54,15 @@
         {
             <tr>
                 <td>
-     <a href="#" class="BtnHorarioMedicosEdit" title="Editar Medico" data-dia="@valorhm.DiaSemanaId" data-suc="@valorhm.SucursalId" data-tih="@valorhm.Tipo_HorarioId" id="@valorhm.HorarioId">
-                                                    <i class="far fa-pencil-alt fa-2x"></i>
-                                                </a>
+                    <a href="#" class="BtnEditarIndv" title="Editar Medico" id="@item.Monitor_Estado_HistID"
+                    onClick="SelectUn(this)">
+                        <i class="fas fa-pencil-alt fa-2x"></i>
+                    </a>
                 </td>
-                <td> 
-                        
-                    <input type="checkbox" data-monitor="@item.Monitor_Estado_HistID" class="form-check  "/>
-                     
+                <td>
+
+                    <input type="checkbox" data-monitor="@item.Monitor_Estado_HistID" class="form-check checksel " />
+
                 </td>
 
 
@@ -60,8 +83,8 @@
                         <label class="badge badge-pill badge-danger">Continua Error</label>
                     }
                 </td>
-                <td class="nameAgrup">@Html.DisplayFor(modelItem => item.FalsoPositivo)</td>     
-                <td class="nameAgrup">@Html.DisplayFor(modelItem => item.Nota)</td>                
+                <td>@Html.DisplayFor(modelItem => item.FalsoPositivo)</td>
+                <td class="nt">@Html.DisplayFor(modelItem => item.Nota)</td>
 
             </tr>
         }

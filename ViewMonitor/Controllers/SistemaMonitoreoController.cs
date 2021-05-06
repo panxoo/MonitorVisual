@@ -263,5 +263,38 @@ namespace ViewMonitor.Controllers
             return File(memory, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", sFileName);
 
         }
+
+          [HttpPost]
+        public async Task<IActionResult> ReporteAddFalsoPositivo(ReporteHistoricoFPPost _model)
+        {
+
+            if(_model.Ids.Count == 0)
+            {
+
+               Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new RetornoActionView { mnsj = "Se debe seleccionar por lo menois un caso" });
+            }
+            
+            RetornoAccion rt = await new SistemaMonitoreoPost(_context).PostReporteHistoricoFP(_model);
+
+            switch (rt.Code)
+            {
+                case 0:
+                    Response.StatusCode = (int)HttpStatusCode.OK;
+                    return Json(new RetornoActionView ());
+                case 1:
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new RetornoActionView { mnsj = rt.Mensaje });
+                default:
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new RetornoActionView
+                    {
+                        redirectToUrl = Url.Action(nameof(SistemaMonitoreoController.MantenedorParametros), "SistemaMonitoreo"),
+                        redir = true,
+                        mnsj = string.IsNullOrEmpty(rt.Mensaje) ? "Error en el registro, volver abrir pantalla para registro." : rt.Mensaje
+                    });
+            }
+
+        }
     }
 }

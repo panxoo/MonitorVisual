@@ -213,7 +213,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
             return retornoAccion;
         }
 
-         public async Task<RetornoAccion> PostMantenedorJobsDel(int id)
+        public async Task<RetornoAccion> PostMantenedorJobsDel(int id)
         {
             RetornoAccion retornoAccion = new RetornoAccion { Code = 0 };
             Job_Monitor _dtJob = await _context.Job_Monitors.FirstOrDefaultAsync(f => f.Job_MonitorID.Equals(id));
@@ -233,6 +233,23 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                 retornoAccion.Parametro = await new SistemaMonitoreoGet(_context).GetMantenedorJobs();
             }
             return retornoAccion;
+        }
+
+        public async Task<RetornoAccion> PostReporteHistoricoFP(ReporteHistoricoFPPost _model)
+        {
+
+            RetornoAccion retornoAccion = new RetornoAccion { Code = 0 };
+
+            foreach (int id in _model.Ids)
+            {
+                Monitor_Estado_Hist mh = await _context.Monitor_Estado_Hists.FirstOrDefaultAsync(f => f.Monitor_Estado_HistID.Equals(id));
+                mh.FalsoPositivo = _model.FalsoPositivo;
+                mh.Nota = _model.Observacion;
+                await _context.SaveChangesAsync();
+            }
+
+            return retornoAccion;
+
         }
     }
 }

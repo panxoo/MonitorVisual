@@ -1,12 +1,16 @@
 @model ReporteHistoricoInput
 
 @{
-ViewData["Title"] = "ReporteHistoricoMonitor";
+    ViewData["Title"] = "ReporteHistoricoMonitor";
 }
+
+
+
 
 <section class="page-content container-fluid">
 
     <div class="row">
+        <partial name="Shared/_ReporteHistoricoMonitorNota" />
 
         <div class="col-12">
             <form method="post" id="FormFilter" asp-controller="SistemaMonitoreo" asp-action="ExportHistMonit">
@@ -36,15 +40,22 @@ ViewData["Title"] = "ReporteHistoricoMonitor";
                                 <label asp-for="FechaFin"></label>
                                 <input type="date" class="form-control" asp-for="FechaFin" autocomplete="off">
                             </div>
+
                         </div>
 
                     </div>
 
 
                     <div class="card-footer">
-                        <input type="button" value="Filtrar" class="btn btn-success" id="btnFilter" onclick="Filtrar()">
-                        <input type="submit" value="Exportar" class="btn btn-success" id="btnExport" >
-                    
+
+                        <a href="#" title="Filtrar" class="" id="btnFilter" onclick="Filtrar()">
+                            <i class="fa fa-search fa-2x text-info "></i>
+                        </a>
+
+                        <a href="#" title="Extraer Excel"  class="m-l-30" id="btnExport">
+                            <i class="fa fa-file-excel fa-2x text-success "></i>
+                        </a>
+
                     </div>
                 </div>
             </form>
@@ -71,48 +82,115 @@ ViewData["Title"] = "ReporteHistoricoMonitor";
 @section Scripts{
 
 <script type="text/javascript">
- 
- 
-    function Filtrar(){
-       
+
+
+    function Filtrar() {
+
         let post = new AjaxSubmit('@Url.Action("ReporteHistoricoMonitorFilter", "SistemaMonitoreo")', "#btnFilter", "Error en obtener datos");
         post.partial = "#datosMonit";
         post.tablereload = "#bs4-table";
-        
-        dt={
-            fechaIni: $("#FechaIni").val(), 
-            fechaFin: $("#FechaFin").val(), 
-            id: $("#MonitorId").val()  
+
+        dt = {
+            fechaIni: $("#FechaIni").val(),
+            fechaFin: $("#FechaFin").val(),
+            id: $("#MonitorId").val()
         };
 
-        post.ObtenerDatos(dt);      
+        post.ObtenerDatos(dt);
     }
 
+    $("#btnExport").click(function (e){
+        $("#FormFilter").submit();
+    });
+  
+  
     $("#AjaxFormRepHistEdit").submit(function (e) {
-e.preventDefault();
+        e.preventDefault();
 
+        let post = new AjaxSubmit('@Url.Action("ReporteAddFalsoPositivo", "SistemaMonitoreo")', "#SubmitBtnMonitor", "Error  en obtener datos");
+        post.btnCancel = "#btnCancelMonitor";
 
-            let post = new AjaxSubmit('@Url.Action("MantenedorMonitoresEdit", "SistemaMonitoreo")', "#SubmitBtn", "Error almacenamiento");
-            post.btnCancel = "#btnCancel";
-            post.partial = "#MonitoresMant";
+        dt = ObtenerDatos();
+        post.AjaxPop(dt);
 
-            dt = ObtenerDatos();
-            post.AjaxPop(dt);
-
+        PostCambios(dt.FalsoPositivo, dt.Observacion);
+        USelectAll();
+        ClearModificador();
     });
 
-    function ObtenerDatos()
-    {
-        let moni =[];
+    function ObtenerDatos() {
+        let arat = [];
 
+        $('#bs4-table tr:has(td)').find('input[type="checkbox"].checksel:checked').each(function () {
+            arat.push($(this).data('monitor'));
+        });
 
-            $.each($("#LstAreAtencionHrMeEd").find(":checkbox"), function () {
-                if ($("#" + this.id).prop('checked'))
-                    arat.push(this.id);
-            });
-
+        return {
+            Ids: arat,
+            FalsoPositivo: $('#falsopositivo').prop('checked'),
+            Observacion: $("#notamonitor").val()
+        }
     }
 
+
+    function SelectAll() {
+        $('#bs4-table tr:has(td)').find('input[type="checkbox"].checksel').not(":checked").each(function () {
+            $(this).prop('checked', true);
+        });
+    }
+
+
+    function USelectAll() {
+        $('#bs4-table tr:has(td)').find('input[type="checkbox"].checksel:checked').each(function () {
+            $(this).prop('checked', false);
+        });
+    }
+
+    function SelectUn(e) {
+        USelectAll();
+        let dtSel = $(e).closest("tr").find('input[type="checkbox"].checksel').first();
+        $(dtSel).prop('checked', true);
+
+        let chec = $(e).closest("tr").find('input[type="checkbox"].check-box').prop('checked');
+        let not = $(e).closest("tr").find('td.nt').text();
+
+        AddParamModificador(chec, not);
+
+        UpEditar();
+    }
+
+    function UpMultiEditar() {
+        ClearModificador();
+        let dt = $('#bs4-table tr:has(td)').find('input[type="checkbox"].checksel:checked').length;
+        if (dt > 0) {
+            UpEditar();
+        }
+    }
+
+    function UpEditar(tp) {
+
+        $("#ReporteHistNota").modal({ keyboard: true, backdrop: "static" });
+    }
+
+    function PostCambios(falsoPositivo, observacion) {
+        $('#bs4-table tr:has(td)').find('input[type="checkbox"].checksel:checked').each(function () {
+            let chec = $(this).closest("tr").find('input[type="checkbox"].check-box');
+            $(chec).prop('checked', falsoPositivo);
+            $(this).closest("tr").find('td.nt').text(observacion);
+
+        });
+    }
+
+    function ClearModificador() {
+        $('#falsopositivo').prop('checked', false);
+        $("#notamonitor").val('');
+    }
+
+    function AddParamModificador(falsoPositivo, observacion) {
+        console.log(falsoPositivo);
+        $('#falsopositivo').prop('checked', falsoPositivo);
+        $("#notamonitor").val(observacion);
+    }
 
 </script>
 }

@@ -14,6 +14,6 @@ namespace ViewMonitor.Models
         public bool FalsoPositivo { get; set; }
         public string Nota { get; set; }
 
-        public int ProcesoId { get;set;}
+        public int ProcesoId { get; set; }
     }
 }

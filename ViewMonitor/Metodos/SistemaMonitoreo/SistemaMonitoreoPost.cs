@@ -1,20 +1,19 @@
-﻿using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using ViewMonitor.Data;
 using ViewMonitor.Models;
 using ViewMonitor.Models.Sistema;
 using ViewMonitor.Models.SistemaMonitoreo;
-using System.Linq;
-
+using ViewMonitor.Metodos.Sistema;
 
 namespace ViewMonitor.Metodos.SistemaMonitoreo
 {
     public class SistemaMonitoreoPost
     {
+        private ApplicationDbContext _context;
 
-        ApplicationDbContext _context;
         public SistemaMonitoreoPost(ApplicationDbContext context)
         {
             _context = context;
@@ -22,7 +21,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
         public async Task<RetornoAccion> PostMantenedorMonitoresEdit(MonitorVisualInputPost _model)
         {
-
             RetornoAccion retornoAccion = new RetornoAccion { Code = 0 };
 
             if (_model.Accion == "4d6f64")
@@ -42,9 +40,8 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
             if (!await _context.Agrupacions.AnyAsync(a => a.AgrupacionID.Equals(_model.AgrupacionID)) || !await _context.Job_Monitors.AnyAsync(a => a.Job_MonitorID.Equals(_model.Job_MonitorID)))
             {
-                retornoAccion = new RetornoAccion { Code = 2, Mensaje = "Error de pagna volver a ingresar." };
+                retornoAccion = new RetornoAccion { Code = 2, Mensaje = "Error de pagina volver a ingresar." };
             }
-
 
             if (retornoAccion.Code == 0)
             {
@@ -61,7 +58,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                     _dt.Procedimiento = _model.Procedimiento.Trim();
 
                     await _context.SaveChangesAsync();
-
                 }
                 else
                 {
@@ -79,10 +75,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                             Estado = true,
                             Fecha = DateTime.Now
                         },
-
-
-
-
                     };
 
                     await _context.AddAsync(_dt);
@@ -94,7 +86,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
             return retornoAccion;
         }
-
 
         public async Task<RetornoAccion> PostMantenedorJobEdit(MantenedorJobInputPost _model)
         {
@@ -186,9 +177,16 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
         public async Task PostMonitoreoVisualExecJob(string id)
         {
-            string job = await _context.Monitors.Where(w => w.MonitorID.Equals(Convert.ToInt32(id))).Select(s => s.Procedimiento).FirstOrDefaultAsync();
+            try
+            {
+                string job = await _context.Monitors.Where(w => w.MonitorID.Equals(Convert.ToInt32(id))).Select(s => s.Procedimiento).FirstOrDefaultAsync();
 
-            var ss = await _context.Database.ExecuteSqlCommandAsync("exec " + job);
+                var ss = await _context.Database.ExecuteSqlCommandAsync("exec " + job);
+            }
+            catch (Exception ex)
+            {
+                VariablesLog.logger.Info("Error Ejecutar procedimiento :  " + ex.Message);
+            }
         }
 
         public async Task<RetornoAccion> PostMantenedorAgrupacionDel(int id)
@@ -237,7 +235,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
         public async Task<RetornoAccion> PostReporteHistoricoFP(ReporteHistoricoFPPost _model)
         {
-
             RetornoAccion retornoAccion = new RetornoAccion { Code = 0 };
 
             foreach (int id in _model.Ids)
@@ -249,7 +246,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
             }
 
             return retornoAccion;
-
         }
     }
 }

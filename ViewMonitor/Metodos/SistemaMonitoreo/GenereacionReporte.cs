@@ -1,11 +1,8 @@
-using System.ComponentModel;
-using System.CodeDom.Compiler;
-using System.IO;
-using ViewMonitor.Data;
-using ViewMonitor.Models;
-using System.Collections.Generic;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using System.Collections.Generic;
+using ViewMonitor.Data;
+using ViewMonitor.Models;
 
 namespace ViewMonitor.Metodos.SistemaMonitoreo
 {
@@ -16,16 +13,13 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
         public GenereacionReporte(ApplicationDbContext context)
         {
             _context = context;
-
         }
 
         public IWorkbook GeneracionExcelHistoricoEstado(List<ViewHistEstadoMonitor> _model)
         {
-
             IWorkbook workbook;
             workbook = new XSSFWorkbook();
             ISheet excelSheet = workbook.CreateSheet("Historico Estado");
-
 
             IDataFormat newDataFormat = workbook.CreateDataFormat();
 
@@ -34,7 +28,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
             styleFecha.BorderLeft = BorderStyle.Thin;
             styleFecha.BorderRight = BorderStyle.Thin;
             styleFecha.DataFormat = newDataFormat.GetFormat("MM/dd/yyyy HH:mm:ss");
-
 
             ICellStyle styleCell = workbook.CreateCellStyle();
             styleCell.BorderBottom = BorderStyle.Thin;
@@ -48,9 +41,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
             styleTitulo.BorderTop = BorderStyle.Thin;
             styleTitulo.FillForegroundColor = NPOI.HSSF.Util.HSSFColor.LightBlue.Index;
             styleTitulo.FillPattern = FillPattern.SolidForeground;
-
-
-
 
             IRow row = excelSheet.CreateRow(0);
 
@@ -68,7 +58,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
             row.CreateCell(5).SetCellValue("Nota");
             row.Cells[4].CellStyle = styleTitulo;
-
 
             int currentRow = 1;
 
@@ -100,10 +89,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
             excelSheet.AutoSizeColumn(4);
             excelSheet.AutoSizeColumn(5);
 
-
             return workbook;
-
         }
-
     }
 }

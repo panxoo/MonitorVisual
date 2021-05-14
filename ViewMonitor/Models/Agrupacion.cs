@@ -10,7 +10,8 @@ namespace ViewMonitor.Models
         [StringLength(1000)]
         [Required(ErrorMessage = "Se requiere ingresar el nombre del Grupo")]
         public string Nombre { get; set; }
-        public bool Activo {get;set;}
+
+        public bool Activo { get; set; }
         public List<Monitor> Monitors { get; set; }
     }
 }

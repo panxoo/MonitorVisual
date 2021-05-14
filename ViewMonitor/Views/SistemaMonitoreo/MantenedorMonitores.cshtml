@@ -5,9 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <partial name="Shared/_MantenedorMonitoresEdit" model="@Model" />
-
 
 <section class="page-content container-fluid">
     <div class="row">
@@ -31,15 +29,11 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-
 </section>
 
 @section scripts{
     @await Html.PartialAsync("_ValidationScriptsPartial")
-
 
     <script type="text/javascript">
 
@@ -54,7 +48,6 @@
             $("#MonitorInput_Job_MonitorID").val($(e).data("job"));
             $("#MonitorInput_AgrupacionID").val($(e).data("agr"));
 
-
             CheckedCheckbox("#MonitorInput_Activo", $(e).data("acti") == "True");
             CheckedCheckbox("#MonitorInput_Alerta", $(e).data("ale") == "True");
 
@@ -64,7 +57,6 @@
                 keyboard: true,
                 backdrop: "static"
             });
-
 
         };
 
@@ -94,7 +86,6 @@
                 return;
             }
 
-
             let post = new AjaxSubmit('@Url.Action("MantenedorMonitoresEdit", "SistemaMonitoreo")', "#SubmitBtn", "Error almacenamiento");
             post.btnCancel = "#btnCancel";
             post.partial = "#MonitoresMant";
@@ -106,7 +97,7 @@
 
         function ObtenerDatos() {
             let sesion = JSON.parse(sessionStorage.getItem('MonitorDt'));
-             
+
             return {
                 MonitorID: sesion[1],
                 Nombre: $("#MonitorInput_Nombre").val(),
@@ -120,10 +111,6 @@
                 Accion: sesion[0]
             }
         }
-
     </script>
 
-
 }
-
-

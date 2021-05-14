@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ViewMonitor.Models;
 
 namespace ViewMonitor.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext (DbContextOptions<ApplicationDbContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
         public DbSet<Monitor> Monitors { get; set; }
-        public DbSet<Monitor_Estado> Monitor_Estados  { get; set; }
+        public DbSet<Monitor_Estado> Monitor_Estados { get; set; }
         public DbSet<Job_Monitor> Job_Monitors { get; set; }
         public DbSet<Agrupacion> Agrupacions { get; set; }
         public DbSet<Monitor_Estado_Hist> Monitor_Estado_Hists { get; set; }
-        public DbSet<ViewHistEstadoMonitor> ViewHistEstadoMonitors {get;set;} 
-
+        public DbSet<ViewHistEstadoMonitor> ViewHistEstadoMonitors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -49,10 +44,8 @@ namespace ViewMonitor.Data
                 eb.HasNoKey();
                 eb.ToView("view_hist_estado_monitor");
             });
-                   
 
             base.OnModelCreating(builder);
-
         }
     }
 }

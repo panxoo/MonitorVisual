@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,7 +41,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
         {
             MonitorVisualInput.MonitorEstadoDetalle _model = new MonitorVisualInput.MonitorEstadoDetalle();
 
-
             _model = await _context.Monitors.Where(w => w.MonitorID.Equals(Convert.ToInt32(id))).Select(s => new MonitorVisualInput.MonitorEstadoDetalle
             {
                 MonitorID = s.MonitorID,
@@ -80,7 +79,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
             return _model;
         }
 
-
         public async Task<MantenedorParametrosInput> GetMantenedorParametros()
         {
             MantenedorParametrosInput _model = new MantenedorParametrosInput();
@@ -103,7 +101,6 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
         public async Task<ReporteHistoricoInput> GetReporteHistoricoMonitor()
         {
-
             ReporteHistoricoInput _model = new ReporteHistoricoInput();
 
             _model.FechaIni = DateTime.Today.AddMonths(-3);
@@ -112,13 +109,11 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
             _model.ReporteHistorials = new List<ViewHistEstadoMonitor>();
 
-
             return _model;
         }
 
         public async Task<List<ViewHistEstadoMonitor>> GetReporteHistoricoMonitorDt(DateTime fechaIni, DateTime fechaFin, int? monit)
         {
-
             List<ViewHistEstadoMonitor> _model = new List<ViewHistEstadoMonitor>();
 
             try
@@ -127,24 +122,15 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
                     _model = await _context.ViewHistEstadoMonitors.Where(w => w.FechaError.Date >= fechaIni.Date && w.FechaError.Date <= fechaFin.Date)
                                                                 .OrderByDescending(o => o.FechaError).ThenBy(o => o.Nombre).ToListAsync();
-
                 else
 
                     _model = await _context.ViewHistEstadoMonitors.Where(w => w.FechaError.Date >= fechaIni.Date && w.FechaError.Date <= fechaFin.Date && w.MonitorID.Equals(monit))
                                                                 .OrderByDescending(o => o.FechaError).ThenBy(o => o.Nombre).ToListAsync();
-
             }
             catch (Exception ex)
             {
-
             }
             return _model;
-
         }
-
-
-
-
-
     }
 }

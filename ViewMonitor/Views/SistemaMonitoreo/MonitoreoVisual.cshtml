@@ -5,7 +5,6 @@ ViewData["Title"] = "MonitoreoVisual";
 Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <form id="FormMonitDet" method="post">
     <div class="modal fade" id="MonitorDetalle" tabindex="-1" role="dialog" aria-labelledby="MonitorDetalle" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -24,7 +23,6 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelDet">Cerrar</button>
                     <button type="submit" class="btn btn-success"  id="btnProcedimient" data-moni="">Ejecutar Revision</button>
-
                 </div>
             </div>
         </div>
@@ -35,9 +33,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
    <div id="MonitoresPart">
             <partial name="Shared/_MonitoreoVisualMonitor" model="@Model" />
     </div>
-    
 </section>
-
 
 @section Scripts{
 
@@ -105,9 +101,9 @@ Layout = "~/Views/Shared/_Layout.cshtml";
     {
         let post = new AjaxSubmit('@Url.Action("MonitoreoVisualCall", "SistemaMonitoreo")', "", "Error en obtener datos");
         post.partial = "#MonitoresPart";
-    
-        post.AjaxMonitor();   
-       
+
+        post.AjaxMonitor();
+
     }
 
     function DetalleMonitor(e) {
@@ -133,15 +129,15 @@ Layout = "~/Views/Shared/_Layout.cshtml";
         e.preventDefault();
         let post = new AjaxSubmit('@Url.Action("MonitoreoVisualExecJob", "SistemaMonitoreo")', "#btnProcedimient", "Error en obtener datos");
         post.partial = "#MonitoresPart"
-        
+
         post.btnCancel = "#btnCancelDet"
         dt={id: $("#btnProcedimient").data("moni")};
 
         post.AjaxMonitor(dt);
 
-    }); 
+    });
 
-    $(".ItemReload").click(function(){ 
+    $(".ItemReload").click(function(){
         let relaux = localStorage.getItem('Monitor-Reload');
 
         if(relaux == null || relaux == "")
@@ -150,16 +146,13 @@ Layout = "~/Views/Shared/_Layout.cshtml";
             localStorage.setItem('Monitor-Reload',relaux);
         }
 
-        if(relaux != reloadTime) 
+        if(relaux != reloadTime)
         {
             clearInterval(reloadMonitor);
             reloadTime = relaux;
             reloadMonitor = setInterval(CallAlarma,reloadTime * 60000);
         }
     });
-
-
-
 </script>
 
 }

@@ -11,12 +11,10 @@ namespace ViewMonitor.Models.SistemaMonitoreo
 
         public Monitor MonitorInput { get; set; }
 
-
         public class MonitoresDatos : Monitor
         {
             public string JobName { get; set; }
             public string AgrupacionName { get; set; }
         }
-
     }
 }

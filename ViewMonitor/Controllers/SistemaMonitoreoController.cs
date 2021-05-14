@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ViewMonitor.Data;
 using ViewMonitor.Metodos.SistemaMonitoreo;
-using ViewMonitor.Models;
 using ViewMonitor.Models.Sistema;
 using ViewMonitor.Models.SistemaMonitoreo;
 
@@ -17,8 +13,9 @@ namespace ViewMonitor.Controllers
 {
     public class SistemaMonitoreoController : Controller
     {
-        ApplicationDbContext _context;
+        private ApplicationDbContext _context;
         private IHostingEnvironment _hostingEnvironment;
+
         public SistemaMonitoreoController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
@@ -29,7 +26,6 @@ namespace ViewMonitor.Controllers
         {
             return RedirectToAction(nameof(SistemaMonitoreoController.MonitoreoVisual), "SistemaMonitoreo");
         }
-
 
         public async Task<IActionResult> MonitoreoVisual()
         {
@@ -51,7 +47,6 @@ namespace ViewMonitor.Controllers
 
             return PartialView("Shared/_MonitoreoVisualMonitor", _model);
         }
-
 
         public async Task<IActionResult> MonitoreoVisualExecJob(string id)
         {
@@ -84,9 +79,11 @@ namespace ViewMonitor.Controllers
                 case 0:
                     Response.StatusCode = (int)HttpStatusCode.OK;
                     return PartialView("Shared/_MantenedorMonitoresMonitores", rt.Parametro);
+
                 case 1:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView { mnsj = rt.Mensaje });
+
                 default:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView
@@ -96,7 +93,6 @@ namespace ViewMonitor.Controllers
                         mnsj = string.IsNullOrEmpty(rt.Mensaje) ? "Error en el registro, volver abrir pantalla para registro." : rt.Mensaje
                     });
             }
-
         }
 
         public async Task<IActionResult> MantenedorParametros()
@@ -121,9 +117,11 @@ namespace ViewMonitor.Controllers
                 case 0:
                     Response.StatusCode = (int)HttpStatusCode.OK;
                     return PartialView("Shared/_MantenedorParametro_Job", rt.Parametro);
+
                 case 1:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView { mnsj = rt.Mensaje });
+
                 default:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView
@@ -133,9 +131,7 @@ namespace ViewMonitor.Controllers
                         mnsj = string.IsNullOrEmpty(rt.Mensaje) ? "Error en el registro, volver abrir pantalla para registro." : rt.Mensaje
                     });
             }
-
         }
-
 
         [HttpPost]
         public async Task<IActionResult> MantenedorAgrupacionEdit(MantenedorAgrupacionInputPost _model)
@@ -152,9 +148,11 @@ namespace ViewMonitor.Controllers
                 case 0:
                     Response.StatusCode = (int)HttpStatusCode.OK;
                     return PartialView("Shared/_MantenedorParametro_Agrupacion", rt.Parametro);
+
                 case 1:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView { mnsj = rt.Mensaje });
+
                 default:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView
@@ -164,9 +162,7 @@ namespace ViewMonitor.Controllers
                         mnsj = string.IsNullOrEmpty(rt.Mensaje) ? "Error en el registro, volver abrir pantalla para registro." : rt.Mensaje
                     });
             }
-
         }
-
 
         [HttpPost]
         public async Task<IActionResult> MantenedorAgrupacionDel(int id)
@@ -178,9 +174,11 @@ namespace ViewMonitor.Controllers
                 case 0:
                     Response.StatusCode = (int)HttpStatusCode.OK;
                     return PartialView("Shared/_MantenedorParametro_Agrupacion", rt.Parametro);
+
                 case 1:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView { mnsj = rt.Mensaje });
+
                 default:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView
@@ -190,7 +188,6 @@ namespace ViewMonitor.Controllers
                         mnsj = string.IsNullOrEmpty(rt.Mensaje) ? "Error en el registro, volver abrir pantalla para registro." : rt.Mensaje
                     });
             }
-
         }
 
         [HttpPost]
@@ -203,9 +200,11 @@ namespace ViewMonitor.Controllers
                 case 0:
                     Response.StatusCode = (int)HttpStatusCode.OK;
                     return PartialView("Shared/_MantenedorParametro_Job", rt.Parametro);
+
                 case 1:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView { mnsj = rt.Mensaje });
+
                 default:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView
@@ -215,7 +214,6 @@ namespace ViewMonitor.Controllers
                         mnsj = string.IsNullOrEmpty(rt.Mensaje) ? "Error en el registro, volver abrir pantalla para registro." : rt.Mensaje
                     });
             }
-
         }
 
         public async Task<IActionResult> ReporteHistoricoMonitor()
@@ -234,7 +232,6 @@ namespace ViewMonitor.Controllers
             return PartialView("Shared/_ReporteHistoricoMonitorDatos", _model);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> ExportHistMonit(DateTime FechaIni, DateTime FechaFin, int MonitorId)
         {
@@ -247,10 +244,8 @@ namespace ViewMonitor.Controllers
             var memory = new MemoryStream();
             using (var fs = new FileStream(Path.Combine(sWebRootFolder, sFileName), FileMode.Create, FileAccess.Write))
             {
-
                 var _dr = new GenereacionReporte(_context).GeneracionExcelHistoricoEstado(_model);
                 _dr.Write(fs);
-
             }
 
             using (var stream = new FileStream(Path.Combine(sWebRootFolder, sFileName), FileMode.Open))
@@ -261,30 +256,29 @@ namespace ViewMonitor.Controllers
             Response.StatusCode = (int)HttpStatusCode.OK;
 
             return File(memory, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", sFileName);
-
         }
 
-          [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> ReporteAddFalsoPositivo(ReporteHistoricoFPPost _model)
         {
-
-            if(_model.Ids.Count == 0)
+            if (_model.Ids.Count == 0)
             {
-
-               Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(new RetornoActionView { mnsj = "Se debe seleccionar por lo menois un caso" });
             }
-            
+
             RetornoAccion rt = await new SistemaMonitoreoPost(_context).PostReporteHistoricoFP(_model);
 
             switch (rt.Code)
             {
                 case 0:
                     Response.StatusCode = (int)HttpStatusCode.OK;
-                    return Json(new RetornoActionView ());
+                    return Json(new RetornoActionView());
+
                 case 1:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView { mnsj = rt.Mensaje });
+
                 default:
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Json(new RetornoActionView
@@ -294,7 +288,6 @@ namespace ViewMonitor.Controllers
                         mnsj = string.IsNullOrEmpty(rt.Mensaje) ? "Error en el registro, volver abrir pantalla para registro." : rt.Mensaje
                     });
             }
-
         }
     }
 }

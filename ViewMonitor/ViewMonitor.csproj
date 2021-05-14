@@ -3,19 +3,22 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Migrations\20200921193821_ssa.cs"/>
-    <Compile Remove="Migrations\20200921193821_ssa.Designer.cs"/>
+    <Compile Remove="Migrations\20200921193821_ssa.cs" />
+    <Compile Remove="Migrations\20200921193821_ssa.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.8"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4"/>
-    <PackageReference Include="DotNetCore.NPOI" Version="1.2.3"/>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
+    <PackageReference Include="NLog" Version="4.7.10" />
+    <PackageReference Include="NLog.Config" Version="4.7.10" />
+    <PackageReference Include="NLog.Schema" Version="4.7.10" />
   </ItemGroup>
 </Project>

@@ -4,9 +4,6 @@
     ViewData["Title"] = "ReporteHistoricoMonitor";
 }
 
-
-
-
 <section class="page-content container-fluid">
 
     <div class="row">
@@ -16,7 +13,6 @@
             <form method="post" id="FormFilter" asp-controller="SistemaMonitoreo" asp-action="ExportHistMonit">
                 <div class="card">
                     <h5 class="card-header">Filtro de busqueda</h5>
-
 
                     <div class="card-body">
                         <div class="form-row">
@@ -40,11 +36,8 @@
                                 <label asp-for="FechaFin"></label>
                                 <input type="date" class="form-control" asp-for="FechaFin" autocomplete="off">
                             </div>
-
                         </div>
-
                     </div>
-
 
                     <div class="card-footer">
 
@@ -55,7 +48,6 @@
                         <a href="#" title="Extraer Excel"  class="m-l-30" id="btnExport">
                             <i class="fa fa-file-excel fa-2x text-success "></i>
                         </a>
-
                     </div>
                 </div>
             </form>
@@ -72,17 +64,13 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
 </section>
-
 
 @section Scripts{
 
 <script type="text/javascript">
-
 
     function Filtrar() {
 
@@ -102,8 +90,7 @@
     $("#btnExport").click(function (e){
         $("#FormFilter").submit();
     });
-  
-  
+
     $("#AjaxFormRepHistEdit").submit(function (e) {
         e.preventDefault();
 
@@ -132,13 +119,11 @@
         }
     }
 
-
     function SelectAll() {
         $('#bs4-table tr:has(td)').find('input[type="checkbox"].checksel').not(":checked").each(function () {
             $(this).prop('checked', true);
         });
     }
-
 
     function USelectAll() {
         $('#bs4-table tr:has(td)').find('input[type="checkbox"].checksel:checked').each(function () {
@@ -191,6 +176,5 @@
         $('#falsopositivo').prop('checked', falsoPositivo);
         $("#notamonitor").val(observacion);
     }
-
 </script>
 }

@@ -5,12 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <partial name="Shared/_MantenedorParametro_JobEdit" model="@Model" />
 <partial name="Shared/_MantenedorParametro_AgrupacionEdit" model="@Model" />
-
-
 
 <section class="page-content container-fluid">
 
@@ -60,13 +56,10 @@
             </div>
         </div>
     </div>
-
-
 </section>
 
 @section scripts{
     @await Html.PartialAsync("_ValidationScriptsPartial")
-
 
     <script type="text/javascript">
 
@@ -149,7 +142,6 @@
 
     });
 
-
     function ObtenerDatosJob() {
         let sesion = JSON.parse(sessionStorage.getItem('JobDt'));
 
@@ -161,7 +153,6 @@
     }
 
     function eliminarAgrupo(e) {
-            
 
         let post = new AjaxSubmit('@Url.Action("MantenedorAgrupacionDel", "SistemaMonitoreo")', "", "Error almacenamiento");
         post.partial = "#GrupoMant";
@@ -180,7 +171,4 @@
     }
     </script>
 
-
 }
-
-

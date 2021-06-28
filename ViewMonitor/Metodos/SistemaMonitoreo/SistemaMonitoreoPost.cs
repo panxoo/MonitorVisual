@@ -25,16 +25,16 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
             if (_model.Accion == "4d6f64")
             {
-                if (await _context.Monitors.AnyAsync(a => !a.MonitorID.Equals(_model.MonitorID) && a.Nombre.Equals(_model.Nombre.Trim())))
+                if (await _context.Monitors.AnyAsync(a => !a.MonitorID.Equals(_model.MonitorID) && (a.Nombre.Equals(_model.Nombre.Trim()) || a.KeyMonitorProce.Equals(_model.KeyMonitorProce))))
                 {
-                    retornoAccion = new RetornoAccion { Code = 1, Mensaje = "El nombre del monitor ya se encuentra registrado, ingresar uno nuevo." };
+                    retornoAccion = new RetornoAccion { Code = 1, Mensaje = "El nombre del monitor o la Key de monitor ya se encuentra registrado, ingresar uno nuevo." };
                 }
             }
             else
             {
-                if (await _context.Monitors.AnyAsync(a => a.Nombre.Equals(_model.Nombre.Trim())))
+                if (await _context.Monitors.AnyAsync(a => a.Nombre.Equals(_model.Nombre.Trim()) || a.KeyMonitorProce.Equals(_model.KeyMonitorProce)))
                 {
-                    retornoAccion = new RetornoAccion { Code = 1, Mensaje = "El nombre del monitor ya se encuentra registrado, ingresar uno nuevo." };
+                    retornoAccion = new RetornoAccion { Code = 1, Mensaje = "El nombre del monitor o la Key de monitor ya se encuentra registrado, ingresar uno nuevo." };
                 }
             }
 
@@ -45,43 +45,55 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
             if (retornoAccion.Code == 0)
             {
-                if (_model.Accion == "4d6f64")
-                {
-                    Monitor _dt = await _context.Monitors.FirstOrDefaultAsync(f => f.MonitorID.Equals(_model.MonitorID));
+                try{
 
-                    _dt.Nombre = _model.Nombre.Trim();
-                    _dt.Descripcion = string.IsNullOrEmpty(_model.Descripcion) ? "" : _model.Descripcion.Trim();
-                    _dt.Activo = _model.Activo;
-                    _dt.AgrupacionID = _model.AgrupacionID;
-                    _dt.Alerta = _model.Alerta;
-                    _dt.Job_MonitorID = _model.Job_MonitorID;
-                    _dt.Procedimiento = _model.Procedimiento.Trim();
-
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    Monitor _dt = new Monitor
+               
+                    if (_model.Accion == "4d6f64")
                     {
-                        Nombre = _model.Nombre.Trim(),
-                        Descripcion = string.IsNullOrEmpty(_model.Descripcion) ? "" : _model.Descripcion.Trim(),
-                        Activo = _model.Activo,
-                        AgrupacionID = _model.AgrupacionID,
-                        Alerta = _model.Alerta,
-                        Job_MonitorID = _model.Job_MonitorID,
-                        Procedimiento = _model.Procedimiento.Trim(),
-                        Monitor_Estado = new Monitor_Estado
+                        Monitor _dt = await _context.Monitors.FirstOrDefaultAsync(f => f.MonitorID.Equals(_model.MonitorID));
+
+                        _dt.Nombre = _model.Nombre.Trim();
+                        _dt.Descripcion = string.IsNullOrEmpty(_model.Descripcion) ? "" : _model.Descripcion.Trim();
+                        _dt.Activo = _model.Activo;
+                        _dt.AgrupacionID = _model.AgrupacionID;
+                        _dt.Alerta = _model.Alerta;
+                        _dt.Job_MonitorID = _model.Job_MonitorID;
+                        _dt.Procedimiento = _model.Procedimiento.Trim();
+                        _dt.KeyMonitorProce = _model.KeyMonitorProce;
+
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        Monitor _dt = new Monitor
                         {
-                            Estado = true,
-                            Fecha = DateTime.Now
-                        },
-                    };
+                            Nombre = _model.Nombre.Trim(),
+                            Descripcion = string.IsNullOrEmpty(_model.Descripcion) ? "" : _model.Descripcion.Trim(),
+                            Activo = _model.Activo,
+                            AgrupacionID = _model.AgrupacionID,
+                            Alerta = _model.Alerta,
+                            Job_MonitorID = _model.Job_MonitorID,
+                            Procedimiento = _model.Procedimiento.Trim(),
+                            Monitor_Estado = new Monitor_Estado
+                            {
+                                Estado = true,
+                                Fecha = DateTime.Now
+                            },
+                            KeyMonitorProce = _model.KeyMonitorProce,
+                            Monitor_Estado_Hists = new System.Collections.Generic.List<Monitor_Estado_Hist>()
+                        };
 
-                    await _context.AddAsync(_dt);
-                    await _context.SaveChangesAsync();
+                        _dt.Monitor_Estado_Hists.Add(new Monitor_Estado_Hist{ estado = true, FalsoPositivo = false, Fecha= DateTime.Now});
+
+                        await _context.AddAsync(_dt);
+                        await _context.SaveChangesAsync();
+                    }
+
+                    retornoAccion.Parametro = await new SistemaMonitoreoGet(_context).GetMantenedorMonitores();
                 }
-
-                retornoAccion.Parametro = await new SistemaMonitoreoGet(_context).GetMantenedorMonitores();
+                catch(Exception ex){
+                    retornoAccion = new RetornoAccion { Code = 1, Mensaje = ex.Message };
+                }
             }
 
             return retornoAccion;
@@ -181,7 +193,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
             {
                 string job = await _context.Monitors.Where(w => w.MonitorID.Equals(Convert.ToInt32(id))).Select(s => s.Procedimiento).FirstOrDefaultAsync();
 
-                var ss = await _context.Database.ExecuteSqlCommandAsync("exec " + job);
+                await _context.Database.ExecuteSqlCommandAsync("exec " + job);
             }
             catch (Exception ex)
             {

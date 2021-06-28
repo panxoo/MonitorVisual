@@ -34,7 +34,15 @@
                         <i class="far fa-edit fa-2x"></i>
                     </a>
                     <a class="BtnAgrupacionDel" onclick="eliminarAgrupo(this)" title="Eliminar Grupo" data-id="@item.AgrupacionID">
-                        <i class="far fa-edit fa-2x"></i>
+                        
+                        @if (item.Activo)
+                    {
+                        <i class="fas fa-times-circle fa-2x text-danger"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-plus-circle fa-2x text-success"></i>
+                    }
                     </a>
                 </td>
             </tr>

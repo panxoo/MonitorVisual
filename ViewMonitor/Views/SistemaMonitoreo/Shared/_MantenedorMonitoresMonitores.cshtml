@@ -16,6 +16,9 @@
                 Procedimiento
             </th>
             <th>
+                Key Procedimiento
+            </th>
+            <th>
                 Jobs
             </th>
             <th>
@@ -42,10 +45,11 @@
                 {
                     <label class="badge badge-pill badge-danger">Inactivo</label>
                 }
-            </td>
+            </td>            
             <td class="nameMonitor">@Html.DisplayFor(modelItem => item.Nombre)</td>
             <td class="descMonitor">@Html.DisplayFor(modelItem => item.Descripcion)</td>
             <td class="procMonitor">@Html.DisplayFor(modelItem => item.Procedimiento)</td>
+            <td class="keyMonitor">@Html.DisplayFor(modelItem => item.KeyMonitorProce)</td>
             <td>@Html.DisplayFor(modelItem => item.JobName)</td>
             <td>@Html.DisplayFor(modelItem => item.AgrupacionName)</td>
             <td>

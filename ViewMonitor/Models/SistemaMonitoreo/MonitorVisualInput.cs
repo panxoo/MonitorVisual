@@ -33,6 +33,8 @@ namespace ViewMonitor.Models.SistemaMonitoreo
             public bool Alarma { get; set; }
             public DateTime FechaHistEst { get; set; }
             public string Procedimiento { get; set; }
+            public int KeyMonitorProce {get;set;}            
+
         }
     }
 }

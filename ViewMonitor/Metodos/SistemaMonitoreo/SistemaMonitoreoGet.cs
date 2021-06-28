@@ -29,7 +29,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                 MonitorNom = s.Nombre,
                 MonitorEstado = s.Monitor_Estado.Estado,
                 Agrupacion = s.AgrupacionID,
-                Alarma = s.Alerta
+                Alarma = s.Alerta,
             }).OrderBy(o => o.MonitorNom).ToListAsync();
 
             _model.Agrupaciones = await _context.Agrupacions.Where(w => w.Activo).ToListAsync();
@@ -49,7 +49,8 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                 MonitorDescripcion = s.Descripcion,
                 Alarma = s.Alerta,
                 FechaHistEst = s.Monitor_Estado.Fecha,
-                Procedimiento = s.Procedimiento
+                Procedimiento = s.Procedimiento,
+                KeyMonitorProce = s.KeyMonitorProce
             }).FirstOrDefaultAsync();
 
             return _model;
@@ -70,7 +71,8 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                 JobName = s.Job_Monitor.Nombre,
                 Job_MonitorID = s.Job_MonitorID,
                 Procedimiento = s.Procedimiento,
-                Descripcion = s.Descripcion
+                Descripcion = s.Descripcion,
+                KeyMonitorProce = s.KeyMonitorProce
             }).OrderByDescending(o => o.Activo).ThenBy(t => t.Nombre).ToListAsync();
 
             _model.Agrupacions = await _context.Agrupacions.Where(w => w.Activo).Select(s => new SelectListItem { Value = s.AgrupacionID.ToString(), Text = s.Nombre }).ToListAsync();
@@ -112,12 +114,10 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
             return _model;
         }
 
-        public async Task<List<ViewHistEstadoMonitor>> GetReporteHistoricoMonitorDt(DateTime fechaIni, DateTime fechaFin, int? monit)
+        public async Task<List<ViewHistEstadoMonitor>> GetReporteHistoricoMonitorDt(DateTime fechaIni, DateTime fechaFin, int monit)
         {
             List<ViewHistEstadoMonitor> _model = new List<ViewHistEstadoMonitor>();
 
-            try
-            {
                 if (monit == -1)
 
                     _model = await _context.ViewHistEstadoMonitors.Where(w => w.FechaError.Date >= fechaIni.Date && w.FechaError.Date <= fechaFin.Date)
@@ -126,10 +126,7 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
 
                     _model = await _context.ViewHistEstadoMonitors.Where(w => w.FechaError.Date >= fechaIni.Date && w.FechaError.Date <= fechaFin.Date && w.MonitorID.Equals(monit))
                                                                 .OrderByDescending(o => o.FechaError).ThenBy(o => o.Nombre).ToListAsync();
-            }
-            catch (Exception ex)
-            {
-            }
+          
             return _model;
         }
     }

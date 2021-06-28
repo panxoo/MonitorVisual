@@ -39,5 +39,10 @@ namespace ViewMonitor.Models
         public List<Monitor_Estado_Hist> Monitor_Estado_Hists { get; set; }
 
         public Monitor_Estado Monitor_Estado { get; set; }
+
+        [Display(Name = "Key Monitor Procedimiento")]
+        [Required(ErrorMessage="Se debe ingresar el key del monitor que se ingreso en el procedimiento.")]
+        [Range(1,10000000)]
+        public int KeyMonitorProce {get;set;}
     }
 }

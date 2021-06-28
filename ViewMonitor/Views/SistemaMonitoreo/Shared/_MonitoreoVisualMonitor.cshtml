@@ -1,6 +1,30 @@
 @model MonitorVisualInput
 
 <div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <h1 class="card-header">Resumen</h1>
+            <div class="card-body form-inline">
+                
+                <div class="col-1">
+                    <i class="fas fa-circle fa-x2 text-success"></i>  
+                </div>
+                <div class="col-3">
+                    @Model.MonitoresVisual.Where(w => w.MonitorEstado).Count()
+                </div>
+                <div class="col-1">
+                    <i class="fas fa-circle fa-x2 text-danger"></i>
+                </div>
+                <div class="col-3">
+                    @Model.MonitoresVisual.Where(w => !w.MonitorEstado).Count()
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<div class="row">
+    
 @foreach (Agrupacion ag in Model.Agrupaciones)
 {
     <div class="col-md-6">

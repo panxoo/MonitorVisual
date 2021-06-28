@@ -1,7 +1,7 @@
 ﻿@model MantenedorMonitoreInput
 
 @{
-    ViewData["Title"] = "MantenedorMonitores";
+    ViewData["Title"] = "Mantenedor Monitores";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,7 +15,7 @@
                 <div class="d-flex bd-highlight">
                     <h1 class=" p-2 flex-grow-1 bd-highlight">Monitores</h1>
                     <div class="p-2  bd-highlight">
-                        <a href="#" id="BtnMonitoresAdd" title="Editar Medico">
+                        <a href="#" id="BtnMonitoresAdd" title="Editar Monitor">
                             <i class="fas fa-plus-circle fa-2x text-info "></i>
                         </a>
                     </div>
@@ -41,12 +41,17 @@
             let nm = $(e).closest('tr').find('.nameMonitor').first();
             let ds = $(e).closest('tr').find('.descMonitor').first();
             let pr = $(e).closest('tr').find('.procMonitor').first();
+            let km = $(e).closest('tr').find('.keyMonitor').first();
+
 
             $("#MonitorInput_Nombre").val(nm.text());
             $("#MonitorInput_Descripcion").val(ds.text());
             $("#MonitorInput_Procedimiento").val(pr.text());
             $("#MonitorInput_Job_MonitorID").val($(e).data("job"));
             $("#MonitorInput_AgrupacionID").val($(e).data("agr"));
+            $("#MonitorInput_KeyMonitorProce").val(km.text());
+
+
 
             CheckedCheckbox("#MonitorInput_Activo", $(e).data("acti") == "True");
             CheckedCheckbox("#MonitorInput_Alerta", $(e).data("ale") == "True");
@@ -67,6 +72,8 @@
             $("#MonitorInput_Procedimiento").val('');
             $("#MonitorInput_Job_MonitorID").prop('selectedIndex', 0);
             $("#MonitorInput_AgrupacionID").prop('selectedIndex', 0);
+            $("#MonitorInput_KeyMonitorProce").val('');
+
 
             CheckedCheckbox("#MonitorInput_Activo", true);
             CheckedCheckbox("#MonitorInput_Alerta", false);
@@ -81,7 +88,7 @@
 
         $("#AjaxFormMonitores").submit(function (e) {
             e.preventDefault();
-
+ 
             if (!$("#AjaxFormMonitores").valid()) {
                 return;
             }
@@ -108,6 +115,7 @@
                 Procedimiento: $("#MonitorInput_Procedimiento").val(),
                 Activo: $('#MonitorInput_Activo').prop('checked'),
                 Alerta: $('#MonitorInput_Alerta').prop('checked'),
+                KeyMonitorProce: $('#MonitorInput_KeyMonitorProce').val(),
                 Accion: sesion[0]
             }
         }

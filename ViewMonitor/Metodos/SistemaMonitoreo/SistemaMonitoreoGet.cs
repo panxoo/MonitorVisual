@@ -29,8 +29,8 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                 MonitorNom = s.Nombre,
                 MonitorEstado = s.Monitor_Estado.Estado,
                 Agrupacion = s.AgrupacionID,
-                Alarma = s.Alerta,
-            }).OrderBy(o => o.MonitorNom).ToListAsync();
+                Alarma = s.Alerta
+            }).ToListAsync();
 
             _model.Agrupaciones = await _context.Agrupacions.Where(w => w.Activo).ToListAsync();
 
@@ -48,9 +48,10 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                 MonitorEstado = s.Monitor_Estado.Estado,
                 MonitorDescripcion = s.Descripcion,
                 Alarma = s.Alerta,
-                FechaHistEst = s.Monitor_Estado.Fecha,
+                FechaHistEst = s.Monitor_Estado_Ultimo.FechaEstado,
                 Procedimiento = s.Procedimiento,
-                KeyMonitorProce = s.KeyMonitorProce
+                UltimoErrorPeriodo = string.IsNullOrEmpty(s.Monitor_Estado_Ultimo.PeriodoError) ? "No ha presentado Errores." : s.Monitor_Estado_Ultimo.PeriodoError,
+                UltimaRevision = s.Monitor_Estado.Fecha
             }).FirstOrDefaultAsync();
 
             return _model;

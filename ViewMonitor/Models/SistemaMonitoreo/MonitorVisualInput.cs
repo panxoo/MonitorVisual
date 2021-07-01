@@ -32,9 +32,9 @@ namespace ViewMonitor.Models.SistemaMonitoreo
             public bool MonitorEstado { get; set; }
             public bool Alarma { get; set; }
             public DateTime FechaHistEst { get; set; }
-            public string Procedimiento { get; set; }
-            public int KeyMonitorProce {get;set;}            
-
+            public string Procedimiento { get; set; } 
+            public string UltimoErrorPeriodo { get; set; }   
+            public DateTime UltimaRevision { get; set; }   
         }
     }
 }

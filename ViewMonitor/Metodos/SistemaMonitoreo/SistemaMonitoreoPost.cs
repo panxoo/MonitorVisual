@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -80,7 +81,11 @@ namespace ViewMonitor.Metodos.SistemaMonitoreo
                                 Fecha = DateTime.Now
                             },
                             KeyMonitorProce = _model.KeyMonitorProce,
-                            Monitor_Estado_Hists = new System.Collections.Generic.List<Monitor_Estado_Hist>()
+                            Monitor_Estado_Hists = new System.Collections.Generic.List<Monitor_Estado_Hist>(),
+                            Monitor_Estado_Ultimo = new Monitor_Estado_Ultimo
+                            {
+                                FechaEstado = DateTime.Now                                
+                            }
                         };
 
                         _dt.Monitor_Estado_Hists.Add(new Monitor_Estado_Hist{ estado = true, FalsoPositivo = false, Fecha= DateTime.Now});

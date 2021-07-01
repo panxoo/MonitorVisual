@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Immutable;
+using Microsoft.EntityFrameworkCore;
 using ViewMonitor.Models;
 
 namespace ViewMonitor.Data
@@ -16,6 +17,7 @@ namespace ViewMonitor.Data
         public DbSet<Agrupacion> Agrupacions { get; set; }
         public DbSet<Monitor_Estado_Hist> Monitor_Estado_Hists { get; set; }
         public DbSet<ViewHistEstadoMonitor> ViewHistEstadoMonitors { get; set; }
+        public DbSet<Monitor_Estado_Ultimo> Monitor_Estado_Ultimos {get;set;}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -44,6 +46,11 @@ namespace ViewMonitor.Data
                 eb.HasNoKey();
                 eb.ToView("view_hist_estado_monitor");
             });
+
+            builder.Entity<Monitor>()
+                   .HasOne(a => a.Monitor_Estado_Ultimo)
+                   .WithOne(a => a.Monitor)
+                   .HasForeignKey<Monitor_Estado_Ultimo>(a => a.MonitorID);
 
             base.OnModelCreating(builder);
         }

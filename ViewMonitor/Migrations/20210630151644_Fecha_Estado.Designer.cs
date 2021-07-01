@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ViewMonitor.Data;
 
 namespace ViewMonitor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210630151644_Fecha_Estado")]
+    partial class Fecha_Estado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,8 +119,14 @@ namespace ViewMonitor.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("FechaEstado")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("MonitorID")
                         .HasColumnType("int");
+
+                    b.Property<string>("PeriodoError")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Monitor_EstadoID");
 
@@ -160,30 +168,6 @@ namespace ViewMonitor.Migrations
                     b.ToTable("Monitor_Estado_Hists");
                 });
 
-            modelBuilder.Entity("ViewMonitor.Models.Monitor_Estado_Ultimo", b =>
-                {
-                    b.Property<int>("Monitor_Estado_UltimoID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("FechaEstado")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MonitorID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PeriodoError")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Monitor_Estado_UltimoID");
-
-                    b.HasIndex("MonitorID")
-                        .IsUnique();
-
-                    b.ToTable("Monitor_Estado_Ultimos");
-                });
-
             modelBuilder.Entity("ViewMonitor.Models.Monitor", b =>
                 {
                     b.HasOne("ViewMonitor.Models.Agrupacion", "Agrupacion")
@@ -213,15 +197,6 @@ namespace ViewMonitor.Migrations
                     b.HasOne("ViewMonitor.Models.Monitor", "Monitor")
                         .WithMany("Monitor_Estado_Hists")
                         .HasForeignKey("MonitorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ViewMonitor.Models.Monitor_Estado_Ultimo", b =>
-                {
-                    b.HasOne("ViewMonitor.Models.Monitor", "Monitor")
-                        .WithOne("Monitor_Estado_Ultimo")
-                        .HasForeignKey("ViewMonitor.Models.Monitor_Estado_Ultimo", "MonitorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

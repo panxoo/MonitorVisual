@@ -1,7 +1,7 @@
 @model MonitorVisualInput
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-lg-4 col-md-6 col-xl-3 col-12 ">
         <div class="card">
             <h1 class="card-header">Resumen</h1>
             <div class="card-body form-inline">
@@ -27,12 +27,12 @@
     
 @foreach (Agrupacion ag in Model.Agrupaciones)
 {
-    <div class="col-md-6">
+    <div class="col-lg-6">
         <div class="card">
             <h1 class="card-header ">@ag.Nombre</h1>
             <div class="card-body">
                 <ul class="list-group">
-                    @foreach (MonitorVisualInput.MonitoresEstado mn in Model.MonitoresVisual.Where(w => w.Agrupacion.Equals(ag.AgrupacionID)))
+                    @foreach (MonitorVisualInput.MonitoresEstado mn in Model.MonitoresVisual.Where(w => w.Agrupacion.Equals(ag.AgrupacionID)).OrderBy(o => o.MonitorNom).OrderBy(o => o.MonitorEstado))
                     {
                         <li class="list-group-item d-flex justify-content-between align-items-center monitoresLi" data-alarma="@mn.Alarma"
                         data-estado="@mn.MonitorEstado" data-id="@mn.MonitorID" data-nom="@mn.MonitorNom" onclick="DetalleMonitor(this)">
